@@ -1,0 +1,162 @@
+Okay yaar 👍 Let’s do Practical 3 from start to end on your Windows laptop: install/run Jenkins, connect your GitHub repository, create a Jenkins pipeline using a `Jenkinsfile`, and configure it to check for changes every 5 minutes.
+
+You have already installed Git, started Jenkins 2.580.1 at `http://localhost:8080`, and created the `githubtest` job. So I’ll include the full exam procedure, but mark the steps you can skip because they’re already done.
+
+## Practical 3 — Continuous Integration using Jenkins
+
+Aim: To perform Continuous Integration using a Jenkins pipeline defined in a `Jenkinsfile` stored in a remote GitHub repository, with Jenkins checking for changes every 5 minutes.
+
+Requirements: Windows, Java compatible with your Jenkins version, Git, Jenkins, and a GitHub repository.
+
+## Step 1: Verify the required software
+
+Open Command Prompt (CMD) and run these commands one at a time:
+
+```
+java -version
+git --version
+```
+
+Both commands should display their installed versions. You already confirmed Git is installed and Jenkins is running, so don't reinstall them.
+
+Open this address in your browser:
+
+[Open Jenkins dashboard](http://localhost:8080?utm_source=chatgpt.com)
+
+Log in if prompted.
+
+## Step 2: Prepare your GitHub repository
+
+Your repository is:
+
+[Open testexp1 on GitHub](https://github.com/panjaritehseen-ship-it/testexp1?utm_source=chatgpt.com)
+
+Make sure the repository contains a file named `Jenkinsfile` in its root directory—not inside another folder.
+
+If it doesn't exist, create a new file on GitHub named exactly `Jenkinsfile` (no `.txt` extension) and add the following content.
+
+```
+pipeline {
+    agent any
+
+    triggers {
+        pollSCM('H/5 * * * *')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out source code from GitHub'
+                checkout scm
+            }
+        }
+
+        stage('CI Check') {
+            steps {
+                bat 'echo CI pipeline executed successfully'
+                bat 'git --version'
+            }
+        }
+    }
+}
+```
+
+Commit the file to the repository's `main` branch. This pipeline retrieves the source code, runs a basic check on Windows, and asks Jenkins to poll the repository approximately every five minutes.
+
+## Step 3: Configure GitHub authentication in Jenkins
+
+Your earlier builds failed because GitHub authentication was rejected. Fix this before running the pipeline.
+
+First, open the repository link above. If the repository is public, Jenkins can normally clone it without a token. If it is private, use a valid GitHub Personal Access Token (PAT) with access to `testexp1` and Contents: Read-only permission.
+
+In Jenkins:
+
+1. Open Manage Jenkins → Credentials.
+2. Open the appropriate credentials store, usually System → Global credentials (unrestricted).
+3. Click Add Credentials.
+4. Enter the following:
+   - Kind: Username with password
+   - Username: Your actual GitHub username
+   - Password: Your GitHub PAT (private repository only)
+   - ID: `github-token`
+5. Save the credential.
+
+Keep the token private. Do not put it inside the `Jenkinsfile` or paste it into the chat.
+
+If you already created this credential, verify it instead of creating another one. Your previous authentication error means the token, account, repository access, or selected Jenkins credential still needs checking.
+
+## Step 4: Configure the Jenkins pipeline job
+
+Since you already created `githubtest`, open that job and click Configure.
+
+Under the Pipeline section, select:
+
+- Definition: `Pipeline script from SCM`
+- SCM: `Git`
+- Repository URL: `https://github.com/panjaritehseen-ship-it/testexp1.git`
+- Credentials: Select `github-token` if the repository is private; select `- none -` if it is public and can be cloned anonymously.
+- Branches to build: `*/main`
+- Script Path: `Jenkinsfile`
+
+Under Build Triggers, make sure Poll SCM is enabled only if your Jenkins configuration requires it separately. For this `Jenkinsfile`, the `pollSCM('H/5 * * * *')` trigger already configures polling.
+
+Click Save.
+
+## Step 5: Run the first build
+
+1. Open the `githubtest` job.
+2. Click Build Now.
+3. Wait for the build to finish.
+4. Click the new build number, such as `#1`.
+5. Click Console Output.
+
+A successful build should finish with:
+
+```
+CI pipeline executed successfully
+Finished: SUCCESS
+```
+
+The exact log will contain other messages too. The important result is `Finished: SUCCESS`.
+
+If it fails, open Console Output and check the first error. If you see another GitHub authentication error, fix Step 3 before continuing.
+
+## Step 6: Demonstrate automatic checking every five minutes
+
+To demonstrate the practical:
+
+1. Open `githubtest` and check that the pipeline has completed successfully.
+2. Go to your GitHub repository and edit a harmless file, such as `README.md`. Add a line like `Testing Jenkins CI`.
+3. Commit the change to the `main` branch.
+4. Wait for Jenkins to detect the change through polling. It checks approximately every five minutes, so the build may not start immediately.
+5. Open Jenkins → `githubtest` → the latest build → Console Output.
+6. Confirm that the pipeline runs successfully after the change.
+
+Important: Polling checks for repository changes; it does not guarantee a build exactly five minutes after every commit. The `H/5` schedule spreads polling across the five-minute intervals.
+
+## Step 7: What to explain during the practical exam
+
+- Jenkins: An automation server used to build, test, and deploy software.
+- Continuous Integration (CI): Developers frequently integrate code changes, and automated checks help identify problems early.
+- Jenkinsfile: A text file that defines the pipeline stages and steps using Pipeline syntax.
+- GitHub integration: Jenkins fetches the source code and `Jenkinsfile` from a remote repository.
+- SCM polling: Jenkins checks the repository periodically for changes.
+- Build result: `SUCCESS` indicates that the configured pipeline completed without a reported failure.
+
+You can draw this simple diagram in your practical journal:
+
+Developer commits code to GitHub
+
+Jenkins polls GitHub every 5 minutes
+
+Fetches code and reads Jenkinsfile
+
+Executes pipeline stages
+
+Build result: SUCCESS / FAILURE
+
+Result: Continuous Integration was configured using Jenkins and a remote GitHub repository, with the pipeline scheduled to check for changes every five minutes.
+
+### Before you proceed
+
+Your earlier builds failed during GitHub authentication, so first tell me one thing: Is your `testexp1` repository Public or Private? I’ll guide you through the correct authentication path so you can get a successful build without unnecessary extra configuration.
