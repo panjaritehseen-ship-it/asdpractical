@@ -1,0 +1,201 @@
+Haan, ab tumhare saare errors ko dhyan mein rakhkar practical ka corrected version dete hain. Kal college mein tumhe Windows PowerShell aur Ubuntu commands ko mix nahi karna hai, aur Ansible ke sudo timeout ko bhi avoid karna hai.
+
+Tumhare laptop par abhi ye cheezein confirm ho chuki hain:
+
+- Ubuntu aur Ansible installed hain.
+- `tree` package installed hai.
+- `nano` mein file save karte waqt permission error hua tha, kyunki tum Windows ke protected `System32` folder mein thi.
+- `become: true` ke saath Ansible ka sudo prompt timeout hua.
+- `become: false` ke saath directory aur configuration file successfully create hui.
+
+Isliye neeche ek clean procedure hai. Ek important limitation: college PC ka OS, internet aur administrator permissions alag ho sakte hain, isliye kisi bhi setup ko har machine par error-free hone ki guarantee nahi di ja sakti. Lekin ye procedure tumhare dekhe hue errors ko avoid karne ke liye banaya gaya hai.
+
+## Practical 5 — Final corrected steps
+
+## Part A. Open the correct terminal
+
+If the college PC runs Ubuntu/Linux: open Terminal and go directly to Part B.
+
+If the college PC runs Windows: open PowerShell and run:
+
+```
+wsl.exe -l -v
+```
+
+If Ubuntu is listed, open it:
+
+```
+wsl.exe -d Ubuntu
+```
+
+If no distribution is installed, try:
+
+```
+wsl.exe --install -d Ubuntu
+```
+
+This last command may require administrator permission and a restart. If college policy blocks installation, use a college-provided Ubuntu/Linux environment instead.
+
+Do not run `sudo apt` in PowerShell.
+
+## Part B. Install Ansible
+
+Run these commands inside Ubuntu/Linux Terminal, one at a time.
+
+1\. Update the package list
+
+```
+sudo apt update
+```
+
+2\. Install Ansible and tree
+
+```
+sudo apt install ansible tree -y
+```
+
+3\. Verify installation
+
+```
+ansible --version
+```
+
+4\. Verify sudo access
+
+```
+sudo whoami
+```
+
+Expected output:
+
+```
+root
+```
+
+If this prints `root`, continue. If it fails, you need an account with administrator privileges.
+
+## Part C. Create the practical folder and playbook
+
+5\. Create a folder in your home directory
+
+```
+cd ~
+mkdir -p ansible-practical
+cd ansible-practical
+```
+
+Check your location:
+
+```
+pwd
+```
+
+It should end in `/ansible-practical`, not `/mnt/c/Windows/System32`.
+
+6\. Create the playbook without opening Nano
+
+This avoids the editor exit and file-saving problems you encountered earlier. Copy and run the entire block:
+
+```
+cat > setup.yml <<'EOF'
+---
+- name: Configure localhost
+  hosts: localhost
+  connection: local
+  become: false
+
+  tasks:
+    - name: Install software
+      ansible.builtin.apt:
+        name: tree
+        state: present
+        update_cache: false
+
+    - name: Create a directory
+      ansible.builtin.file:
+        path: /tmp/ansible-demo
+        state: directory
+        mode: '0755'
+
+    - name: Create a configuration file
+      ansible.builtin.copy:
+        dest: /tmp/ansible-demo/info.txt
+        content: "Configured using Ansible on localhost."
+        mode: '0644'
+EOF
+```
+
+7\. Verify that the file was saved
+
+```
+cat setup.yml
+```
+
+Check that all the YAML lines are displayed.
+
+## Part D. Execute the playbook — important correction
+
+8\. Run the playbook using sudo for the entire Ansible process
+
+```
+sudo ansible-playbook -i 'localhost,' setup.yml
+```
+
+This is the important change from your earlier attempts. Instead of asking Ansible to prompt for sudo separately using `become: true` and `-K`, the command runs Ansible with administrator privileges from the start. That should avoid the specific Ansible sudo-prompt timeout you encountered.
+
+Enter your Linux password if requested. The characters will not appear while typing.
+
+A successful result should end with something similar to:
+
+```
+PLAY RECAP
+localhost : ok=4 changed=3 unreachable=0 failed=0
+```
+
+The task counts can differ. The key checks are `unreachable=0` and `failed=0`.
+
+## Part E. Verify the practical
+
+9\. Verify software installation
+
+```
+tree --version
+```
+
+10\. Verify the directory
+
+```
+ls -ld /tmp/ansible-demo
+```
+
+11\. Verify the configuration file
+
+```
+cat /tmp/ansible-demo/info.txt
+```
+
+Expected output:
+
+```
+Configured using Ansible on localhost.
+```
+
+Your practical demonstrates both software provisioning (installing `tree`) and configuration management (creating a directory and configuration file).
+
+## If an error occurs tomorrow
+
+| Error                            | What to do                                                                                       |
+| -------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `ansible: command not found`     | Run `sudo apt install ansible -y` in Ubuntu.                                                     |
+| `Permission denied` while saving | Use `cd ~/ansible-practical`; the `cat` command above avoids Nano entirely.                      |
+| Ansible sudo prompt timeout      | Confirm `sudo whoami` prints `root`, then use `sudo ansible-playbook -i 'localhost,' setup.yml`. |
+| `apt` cannot find package        | Run `sudo apt update`, then retry the installation.                                              |
+| `wsl.exe` fails in PowerShell    | Check whether WSL is enabled and whether the college PC permits installing a Linux distribution. |
+
+## What to write in the practical journal
+
+Aim: To install Ansible and perform software provisioning and configuration on the localhost machine.
+
+Result: Ansible was used to install the required software and configure localhost by creating a directory and a configuration file through a YAML playbook.
+
+Remember for the exam: `sudo apt` is for the Linux terminal, `ansible --version` checks the installation, and `sudo ansible-playbook -i 'localhost,' setup.yml` runs the playbook with administrator privileges.
