@@ -1,0 +1,466 @@
+I'll give you the complete college practical procedure from the beginning, including installation, DAG creation, execution, output, and viva explanation. We'll account for the errors you encountered so you don't repeat them tomorrow.
+
+Practical 9: Install Apache Airflow and create a Directed Acyclic Graph (DAG) to display the date and time every Wednesday at 9:30 AM.
+
+Your earlier setup had three important issues: Ubuntu was already installed, its default Python was 3.14, and Jenkins/Docker may occupy the usual webserver ports. The steps below address all three.
+
+One important distinction: your previous messages did not confirm that Airflow's installation and webserver had completed successfully. So the first section checks the setup rather than assuming it is ready.
+
+## Part 1 — Check the college PC
+
+### Step 1: Check WSL and Ubuntu
+
+Open PowerShell and run:
+
+```
+wsl --status
+wsl --list --verbose
+```
+
+If `Ubuntu` is listed, enter it:
+
+```
+wsl -d Ubuntu
+```
+
+If Ubuntu is not listed, install it from an Administrator PowerShell:
+
+```
+wsl --install -d Ubuntu
+```
+
+Restart if prompted, launch Ubuntu, and complete the initial username/password setup. If your college PC does not permit WSL installation, you may need the lab administrator's help.
+
+Important: Once Ubuntu opens, all subsequent Linux commands must be entered there, not in PowerShell. You should see a prompt similar to `student@computer:~$`.
+
+## Part 2 — Install compatible Python and Airflow
+
+### Step 2: Install system prerequisites
+
+Inside Ubuntu, run:
+
+```
+sudo apt update
+sudo apt install -y curl ca-certificates
+```
+
+If Ubuntu asks for a password, enter the Linux password you created. Nothing will appear while typing it.
+
+### Step 3: Install `uv` and Python 3.12
+
+We use Python 3.12 because Airflow 2.10.5 supports it, unlike Python 3.14.
+
+```
+curl -LsSf https://astral.sh/uv/install.sh -o /tmp/uv-install.sh
+sh /tmp/uv-install.sh
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+Check the installation:
+
+```
+uv --version
+```
+
+Install Python 3.12:
+
+```
+uv python install 3.12
+uv python find 3.12
+```
+
+If `uv` is not found, close and reopen Ubuntu, then run:
+
+```
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+### Step 4: Create the project folder and virtual environment
+
+Run these commands in Ubuntu:
+
+```
+mkdir -p ~/airflow-practical/dags
+cd ~/airflow-practical
+
+uv venv --python 3.12 .venv
+source .venv/bin/activate
+```
+
+Check:
+
+```
+python --version
+```
+
+Expected: `Python 3.12.x`
+
+Your prompt may now show `(.venv)` at the beginning. This means the isolated Python environment is active.
+
+### Step 5: Install Apache Airflow 2.10.5
+
+Copy this entire block:
+
+```
+cd ~/airflow-practical
+source .venv/bin/activate
+
+export AIRFLOW_HOME="$HOME/airflow-practical"
+
+AIRFLOW_VERSION=2.10.5
+PYTHON_VERSION=3.12
+
+CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
+
+uv pip install "apache-airflow==${AIRFLOW_VERSION}" --constraint "$CONSTRAINT_URL"
+```
+
+Wait for installation to finish. It requires internet access and may take several minutes.
+
+Verify:
+
+```
+airflow version
+```
+
+Expected output:
+
+```
+2.10.5
+```
+
+If you get an error, stop at that point and resolve it before creating the server.
+
+## Part 3 — Create the DAG
+
+### Step 6: Create the Python file
+
+Run the following complete block in Ubuntu. It creates the file directly, so you don't need to use `nano`.
+
+```
+cat > ~/airflow-practical/dags/date_time_dag.py <<'PY'
+import pendulum
+
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+
+
+def display_date_time():
+    now = pendulum.now("Asia/Kolkata")
+    print("Current Date:", now.strftime("%d-%m-%Y"))
+    print("Current Time:", now.strftime("%I:%M:%S %p"))
+
+
+with DAG(
+    dag_id="date_time_every_wednesday",
+    description="Display date and time every Wednesday at 9:30 AM",
+    start_date=pendulum.datetime(2026, 10, 1, tz="Asia/Kolkata"),
+    schedule="30 9 * * 3",
+    catchup=False,
+    tags=["practical"],
+) as dag:
+
+    show_datetime = PythonOperator(
+        task_id="display_date_and_time",
+        python_callable=display_date_time,
+    )
+PY
+```
+
+Check that the file exists:
+
+```
+ls -l ~/airflow-practical/dags/
+```
+
+You should see:
+
+```
+date_time_dag.py
+```
+
+### Step 7: Understand the code
+
+| Code                    | Purpose                                                        |
+| ----------------------- | -------------------------------------------------------------- |
+| `DAG`                   | Defines the workflow.                                          |
+| `PythonOperator`        | Executes a Python function as a task.                          |
+| `display_date_time()`   | Prints the current date and time.                              |
+| `Asia/Kolkata`          | Uses Indian Standard Time.                                     |
+| `schedule="30 9 * * 3"` | Schedules the DAG every Wednesday at 9:30 AM.                  |
+| `catchup=False`         | Prevents Airflow from running all missed historical schedules. |
+
+The cron expression is:
+
+## `30 9 * * 3`
+
+## 30
+
+Minute
+
+## 9
+
+Hour
+
+## \*
+
+Day
+
+## \*
+
+Month
+
+## 3
+
+Wednesday
+
+The schedule uses the DAG's Asia/Kolkata timezone.
+
+## Part 4 — Initialize Airflow
+
+### Step 8: Initialize the database
+
+Run:
+
+```
+cd ~/airflow-practical
+source .venv/bin/activate
+export AIRFLOW_HOME="$HOME/airflow-practical"
+
+airflow db migrate
+```
+
+Wait for the database migration to complete.
+
+### Step 9: Create the login account
+
+Run:
+
+```
+airflow users create \
+  --username admin \
+  --firstname Admin \
+  --lastname Student \
+  --role Admin \
+  --email admin@example.com \
+  --password Admin123
+```
+
+For this local demonstration, the login will be:
+
+- Username: `admin`
+- Password: `Admin123`
+
+If the account already exists, don't create it again. Use the existing account or reset the password if necessary.
+
+### Step 10: Check the DAG
+
+Run:
+
+```
+airflow dags list
+```
+
+Look for:
+
+```
+date_time_every_wednesday
+```
+
+Then run:
+
+```
+airflow dags list-import-errors
+```
+
+If there are no import errors, proceed to starting the services.
+
+You can also verify the DAG's schedule:
+
+```
+airflow dags details date_time_every_wednesday
+```
+
+## Part 5 — Start the Airflow server without interrupting Jenkins
+
+### Step 11: Find an available port
+
+Since Jenkins uses port `8080` on your personal laptop and Docker may use other ports, check the college PC rather than assuming a port is free.
+
+Open a separate PowerShell window and run:
+
+```
+netstat -ano | findstr LISTENING | findstr ":8080 :8081 :8082 :8083 :8084"
+```
+
+Choose a port that is not already listening. For the following steps, we'll use 8083. If 8083 is occupied, replace `8083` with an available port, such as `8084`, in both the command and browser address.
+
+### Step 12: Start the webserver
+
+Return to your first Ubuntu terminal and run:
+
+```
+cd ~/airflow-practical
+source .venv/bin/activate
+export AIRFLOW_HOME="$HOME/airflow-practical"
+
+airflow webserver --port 8083
+```
+
+Keep this terminal open. Do not type any more commands into it while the webserver is running.
+
+### Step 13: Start the scheduler
+
+Open a second Ubuntu terminal. Enter Ubuntu from PowerShell if needed:
+
+```
+wsl -d Ubuntu
+```
+
+Then, inside Ubuntu, run:
+
+```
+cd ~/airflow-practical
+source .venv/bin/activate
+export AIRFLOW_HOME="$HOME/airflow-practical"
+
+airflow scheduler
+```
+
+Keep this terminal open as well.
+
+The two processes have separate jobs:
+
+- Webserver: provides the browser interface.
+- Scheduler: checks the timetable and schedules DAG runs.
+
+## Part 6 — Run and demonstrate the practical
+
+### Step 14: Log in
+
+Open Chrome on the college PC:
+
+[Open Apache Airflow on port 8083](http://localhost:8083?utm_source=chatgpt.com)
+
+Log in with the administrator credentials created earlier.
+
+### Step 15: Enable the DAG
+
+On the DAGs page:
+
+1. Find `date_time_every_wednesday`.
+2. Turn its toggle switch ON.
+3. Click the DAG name.
+4. Use the Trigger DAG option to start a manual run.
+
+A manual run is useful for a college demonstration because you don't need to wait until Wednesday.
+
+### Step 16: Verify the task
+
+Open the DAG's Grid view. Find the task:
+
+`display_date_and_time`
+
+Click the task instance and open Logs. A successful run should show output similar to:
+
+```
+Current Date: 29-10-2026
+Current Time: 10:15:32 AM
+```
+
+This is example output; your actual date and time will depend on when the task runs.
+
+The task should show a successful status (green).
+
+### Step 17: Test from the terminal if needed
+
+If the UI isn't showing the expected output, open another Ubuntu terminal and run:
+
+```
+cd ~/airflow-practical
+source .venv/bin/activate
+export AIRFLOW_HOME="$HOME/airflow-practical"
+
+airflow tasks test date_time_every_wednesday display_date_and_time 2026-10-28
+```
+
+This tests the task directly and prints the function's output. It does not, by itself, prove that the scheduler automatically runs the DAG on Wednesday.
+
+The scheduled run should occur every Wednesday at 9:30 AM IST, provided the scheduler is running, the DAG is enabled, and the computer is awake.
+
+## Part 7 — Common errors and exact corrections
+
+| Error                        | What to do                                                                              |
+| ---------------------------- | --------------------------------------------------------------------------------------- |
+| `airflow: command not found` | Enter Ubuntu, then run `cd ~/airflow-practical` and `source .venv/bin/activate`.        |
+| `No module named airflow`    | Verify the virtual environment is active and repeat the Airflow installation in Step 5. |
+| `Address already in use`     | Change the webserver port to an available one, such as `8084`.                          |
+| `DAG not found`              | Check the DAG file location and run `airflow dags list-import-errors`.                  |
+| Login fails                  | Run `airflow users list` and confirm the account exists.                                |
+| Webpage won't open           | Check that the webserver is still running and that you're using its correct port.       |
+| `ensurepip is not available` | Use the `uv venv --python 3.12 .venv` procedure above instead of `python3 -m venv`.     |
+
+## Part 8 — What to write in your practical journal
+
+Aim: To install Apache Airflow and create a DAG to display the current date and time every Wednesday at 9:30 AM.
+
+Software required: Windows with WSL2 and Ubuntu, Python 3.12, Apache Airflow 2.10.5, and a web browser.
+
+Algorithm:
+
+1. Install and configure the required Python environment and Apache Airflow.
+2. Initialize the Airflow metadata database and create an administrator account.
+3. Create a DAG with a Python task that prints the current date and time.
+4. Define the schedule using the cron expression `30 9 * * 3`.
+5. Start the Airflow webserver and scheduler.
+6. Enable and trigger the DAG, then verify successful execution through task logs.
+
+Result: Successfully configured an Apache Airflow DAG to display the current date and time, with a schedule of every Wednesday at 9:30 AM IST.
+
+## Part 9 — Viva preparation
+
+1\. What is Apache Airflow?\
+Apache Airflow is a workflow automation and scheduling platform used to define, schedule, and monitor tasks.
+
+2\. What is a DAG?\
+A Directed Acyclic Graph defines a workflow and the order in which its tasks execute, without circular dependencies.
+
+3\. What is a PythonOperator?\
+It is an Airflow operator that executes a Python function as a task.
+
+4\. What does the cron expression `30 9 * * 3` mean?\
+It means every Wednesday at 9:30 AM.
+
+5\. What is the difference between the webserver and scheduler?\
+The webserver provides the user interface, while the scheduler determines when scheduled tasks should run.
+
+6\. Why do we use a virtual environment?\
+It isolates the project's Python packages from the system Python installation and other projects.
+
+7\. How do you check task execution?\
+Open the DAG's Grid view and inspect the task instance's logs.
+
+8\. Does clicking Trigger DAG prove the schedule works?\
+No. It proves the DAG can be triggered. The scheduler must independently execute the DAG according to its schedule.
+
+### Your final checklist for tomorrow
+
+## Practical readiness
+
+0 of 7
+
+Ubuntu opens successfully
+
+Python 3.12 and Airflow 2.10.5 are installed
+
+DAG appears without import errors
+
+Airflow database and admin account are ready
+
+A free webserver port is selected
+
+Webserver and scheduler both start
+
+DAG triggers successfully and task logs show date/time
+
+One final recommendation: if you're preparing on your own laptop tonight, verify that the DAG actually appears and runs successfully before relying on these steps at college. The commands above are the complete procedure, but a successful installation on your own machine has not yet been confirmed.
