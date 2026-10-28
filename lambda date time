@@ -1,0 +1,118 @@
+For your DevOps practical, this Lambda function will automatically store the current date and time in an AWS DynamoDB table whenever the Lambda function is executed.
+
+We can do this directly in the AWS Console, without installing anything on your HP Victus laptop. We’ll use Python and DynamoDB.
+
+## 1. Create a DynamoDB table
+
+1. Open the [AWS DynamoDB Console](https://console.aws.amazon.com/dynamodb/?utm_source=chatgpt.com).
+2. Select Tables → Create table.
+3. Enter these details:
+
+- Table name: `ExecutionLog`
+- Partition key: `id`
+- Key type: `String`
+- Table settings: Default settings
+
+4\. Click Create table and wait until the table status becomes `Active`.
+
+## 2. Create the Lambda function
+
+1. Open the [AWS Lambda Console](https://console.aws.amazon.com/lambda/?utm_source=chatgpt.com).
+2. Click Create function.
+3. Select Author from scratch.
+4. Enter:
+   - Function name: `StoreDateTime`
+   - Runtime: Python 3.12 (or another available Python 3 version)
+   - Architecture: Default
+5. Click Create function.
+
+## 3. Give Lambda permission to access DynamoDB
+
+This step is important. Without permission, Lambda cannot write data to your table.
+
+1. Open your `StoreDateTime` function.
+2. Go to Configuration → Permissions.
+3. Click the execution role name to open it in IAM.
+4. Select Add permissions → Create inline policy.
+5. Open the JSON editor and enter the following policy:
+
+Replace `YOUR_ACCOUNT_ID` with your 12-digit AWS account ID if you use this policy directly. Also replace `ap-south-1` if your DynamoDB table is in another region.
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "dynamodb:PutItem",
+      "Resource": "arn:aws:dynamodb:ap-south-1:YOUR_ACCOUNT_ID:table/ExecutionLog"
+    }
+  ]
+}
+```
+
+6\. Click Next, name the policy `LambdaWriteExecutionLog`, and create it.
+
+This grants only the permission needed to insert records into `ExecutionLog`.
+
+## 4. Write the Lambda function
+
+Return to the Lambda console. Under the Code tab, open `lambda_function.py`, replace the existing code with this, and click Deploy.
+
+```
+import jsonimport boto3import uuidfrom datetime import datetimefrom zoneinfo import ZoneInfodynamodb = boto3.resource("dynamodb")table = dynamodb.Table("ExecutionLog")def lambda_handler(event, context):    now = datetime.now(ZoneInfo("Asia/Kolkata"))    item = {        "id": str(uuid.uuid4()),        "date": now.strftime("%Y-%m-%d"),        "time": now.strftime("%H:%M:%S"),        "timestamp": now.isoformat()    }    table.put_item(Item=item)    return {        "statusCode": 200,        "body": json.dumps({            "message": "Date and time stored successfully",            "data": item        })    }
+```
+
+What the code does:
+
+- `boto3` connects Python to DynamoDB.
+- `datetime.now(ZoneInfo("Asia/Kolkata"))` gets the current Indian date and time.
+- `uuid.uuid4()` generates a unique ID for each execution.
+- `put_item()` saves the record in the `ExecutionLog` table.
+- The function returns a success message with the stored data.
+
+Each execution creates a new record rather than overwriting the previous one.
+
+## 5. Test the Lambda function
+
+1. In the Lambda console, click Test.
+2. Create a test event named `DateTimeTest`.
+3. Enter this event JSON:
+
+```
+{}
+```
+
+4. Save the test event.
+5. Click Test again to execute the function.
+
+Expected output will look similar to this (the date and time will reflect the actual execution):
+
+```
+{
+  "statusCode": 200,
+  "body": "{\"message\": \"Date and time stored successfully\", \"data\": {\"id\": \"...\", \"date\": \"2026-10-28\", \"time\": \"21:35:00\", \"timestamp\": \"2026-10-28T21:35:00+05:30\"}}"
+}
+```
+
+## 6. Verify the record in DynamoDB
+
+[Create and Query a NoSQL Table with Amazon DynamoDB](https://images.openai.com/static-rsc-4/fjjHV0B5wbw5gTO0fVwbDgamTQGYljb8SSRpCqt_l1kz78wWAK_58xLa_0FoVEyHRoy1um8nAiNmwLScOJgRCc4Ki3ZYXFGdqTlIFCx7p6FYNuSdl6_I6ihkmyDx8hH__Z3VtcOoQ0tBMcRbWZQkaSxhaeOnsyO_2CCNAZl6_3I?purpose=inline)
+
+Open DynamoDB
+
+Go to Tables → `ExecutionLog` → Explore table items.
+
+[Options for legacy application modernization with Amazon Aurora and Amazon DynamoDB | AWS Database Blog](https://images.openai.com/static-rsc-4/vkbX9qPz78ue12LUUCMJgZgWRn3bNDhbP4UyCrY3AoCCabZpDlSLt59qql-ConJAwI8QH66MrMEbkdOP69cIxMgqdxFVjdWMGLKtp4ba1WA0Q5xlZLzl6dN9z5oQc45MozDahTyKcs7l7eLkQB34oTxlis_xl_J4jX7hynCRQcI?purpose=inline)
+
+Check the saved item
+
+Click Run if needed. You should see the `id`, `date`, `time`, and `timestamp` attributes.
+
+Run the Lambda test twice. You should see two separate records with different IDs.
+
+## Practical conclusion
+
+The AWS Lambda function was created using Python and integrated with Amazon DynamoDB. Whenever the function executes, it obtains the current date and time in Indian Standard Time (IST) and stores them in the DynamoDB table.
+
+Important: Ensure that Lambda and DynamoDB are in the same AWS region and that the Lambda execution role has the `dynamodb:PutItem` permission.
