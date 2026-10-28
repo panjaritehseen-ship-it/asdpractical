@@ -1,0 +1,215 @@
+Here is your final corrected practical, based on what we actually did on your laptop. I've kept the commands simple, included the PowerShell method for creating the Dockerfile, and used port 8081 because port 8080 was already occupied.
+Practical: Install Docker and deploy a two-page E-commerce website
+Aim: To install Docker and deploy an E-commerce web application consisting of at least two web pages.
+
+Software required: Windows, Docker Desktop, PowerShell, HTML and Nginx.
+Step 1: Install Docker Desktop
+1. Open Docker Desktop's official website.
+2. Download Docker Desktop for Windows.
+3. Run the installer and follow the instructions.
+4. Start Docker Desktop and wait until the Docker engine is running.
+Open PowerShell and check Docker:
+docker --version
+docker info
+
+
+If these commands work without a Docker engine connection error, continue.
+Step 2: Create the project folder
+Run these commands one at a time in PowerShell:
+mkdir "$HOME\development\docker-ecommerce" -Force
+
+
+cd "$HOME\development\docker-ecommerce"
+
+
+This creates the folder where we will store all our website files.
+Step 3: Create the Home page
+Run:
+notepad index.html
+
+
+Paste this code into Notepad:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ShopEasy Home</title>
+</head>
+<body style="font-family: Arial; text-align: center;">
+    <h1>Welcome to ShopEasy</h1>
+    <p>Your online shopping website</p>
+
+    <a href="/">Home</a> |
+    <a href="/products.html">Products</a>
+
+    <h2>Featured Products</h2>
+
+    <h3>Headphones - ₹1499</h3>
+    <button onclick="alert('Added to cart!')">Add to Cart</button>
+
+    <h3>Smart Watch - ₹2499</h3>
+    <button onclick="alert('Added to cart!')">Add to Cart</button>
+</body>
+</html>
+
+
+
+Save with Ctrl + S and close Notepad.
+
+This is our first web page.
+Step 4: Create the Products page
+Run:
+notepad products.html
+
+
+Paste this code:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ShopEasy Products</title>
+</head>
+<body style="font-family: Arial; text-align: center;">
+    <h1>Our Products</h1>
+
+    <a href="/">Home</a> |
+    <a href="/products.html">Products</a>
+
+    <h2>Available Products</h2>
+
+    <h3>Headphones</h3>
+    <p>Price: ₹1499</p>
+    <button onclick="alert('Added to cart!')">Add to Cart</button>
+
+    <h3>Smart Watch</h3>
+    <p>Price: ₹2499</p>
+    <button onclick="alert('Added to cart!')">Add to Cart</button>
+
+    <h3>Bluetooth Speaker</h3>
+    <p>Price: ₹999</p>
+    <button onclick="alert('Added to cart!')">Add to Cart</button>
+</body>
+</html>
+
+
+
+Save with Ctrl + S and close Notepad.
+
+Now we have two web pages: index.html and products.html.
+Step 5: Create the Dockerfile
+To avoid the .txt extension problem we encountered with Notepad, create the file directly using PowerShell.
+
+Run this complete command:
+@'
+FROM nginx:alpine
+COPY index.html /usr/share/nginx/html/index.html
+COPY products.html /usr/share/nginx/html/products.html
+EXPOSE 80
+'@ | Set-Content -Path Dockerfile -Encoding ascii
+
+
+The file will be created with the exact name Dockerfile, without .txt.
+
+Check the files:
+Get-ChildItem -Name
+
+
+You should see:
+Dockerfile
+index.html
+products.html
+
+
+Remember: The Dockerfile contains instructions for building our website's Docker image.
+Step 6: Build the Docker image
+Run:
+docker build -t shopeasy .
+
+
+Wait for the command to finish successfully.
+
+Verify the image:
+docker images
+
+
+You should see shopeasy:latest in the output.
+
+Remember: docker build creates the image using the Dockerfile.
+Step 7: Run the Docker container
+Initially, we tried port 8080, but it was already in use. Therefore, we changed the host port to 8081.
+
+First, remove the failed container if it still exists:
+docker rm shopeasy-container
+
+
+If PowerShell says the container does not exist, that's fine; continue.
+
+Now run:
+docker run -d --name shopeasy-container -p 8081:80 shopeasy
+
+
+A long container ID should appear if the command succeeds.
+
+Here, 8081 is the port on your laptop, and 80 is the port inside the container.
+Step 8: Verify the running container
+Run:
+docker ps
+
+
+You should see shopeasy-container with a port mapping similar to:
+0.0.0.0:8081->80/tcp
+
+
+This confirms that the container is running.
+Step 9: Open the website
+Open Google Chrome and visit these URLs.
+Page 1: Home page
+
+http://localhost:8081
+Open Home Page
+
+Page 2: Products page
+
+http://localhost:8081/products.html
+Open Products Page
+
+Check that both pages load, the navigation links work, and clicking Add to Cart displays a message.
+
+The cart is only a demonstration; it does not store products or process payments.
+Step 10: Stop and restart the website
+To stop the website:
+docker stop shopeasy-container
+
+
+To start it again:
+docker start shopeasy-container
+
+
+Then reopen http://localhost:8081.
+Step 11: Practical journal — write this in your notebook
+Procedure: Created two HTML pages, Home and Products, for an E-commerce website. Created a Dockerfile using the Nginx Alpine image. Built the Docker image using the docker build command and ran the container using the docker run command. Verified the running container using docker ps and accessed both web pages through a browser.
+
+Result: Successfully deployed a two-page E-commerce website using Docker.
+
+Conclusion: Docker allows us to package and run a web application inside a container.
+Viva questions
+Question	Simple answer
+What is Docker?	Docker is a platform used to run applications inside containers.
+What is a Dockerfile?	A file containing instructions to build a Docker image.
+What is an image?	A package used to create a container.
+What is a container?	A running instance of an image.
+Why did we use Nginx?	To serve our HTML web pages through a browser.
+Why did we use port 8081?	Because port 8080 was already occupied.
+What is docker build?	It creates a Docker image.
+What is docker run?	It creates and starts a container from an image.
+
+Easy sequence to remember for the exam:
+
+Create two pages → Create Dockerfile → Build image → Run container → Open website.
+
+These are the corrected steps for your practical, including the actual port change and the Dockerfile creation method that worked around the .txt issue.
+
+If you want, I can:
+- Add deployment automation using a PowerShell script
+- Extend the website with a shopping cart backend using Node.js
+- Explain Docker networking and how to change ports dynamically
