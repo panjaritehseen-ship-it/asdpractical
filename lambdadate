@@ -1,0 +1,46 @@
+
+import json
+import boto3
+import uuid
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+dynamodb = boto3.resource("dynamodb")
+table = dynamodb.Table("ExecutionLog")
+
+def lambda_handler(event, context):
+    now = datetime.now(ZoneInfo("Asia/Kolkata"))
+
+    item = {
+        "id": str(uuid.uuid4()),
+        "date": now.strftime("%Y-%m-%d"),
+        "time": now.strftime("%H:%M:%S"),
+        "timestamp": now.isoformat()
+    }
+
+    table.put_item(Item=item)
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps({
+            "message": "Date and time stored successfully",
+            "data": item
+        })
+    }
+
+
+
+
+
+
+policy code....
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "dynamodb:PutItem",
+      "Resource": "arn:aws:dynamodb:ap-south-1:YOUR_ACCOUNT_ID:table/ExecutionLog"
+    }
+  ]
+}
