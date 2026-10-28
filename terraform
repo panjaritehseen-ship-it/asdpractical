@@ -1,0 +1,286 @@
+Okay. I’ll give you the corrected start-to-end Terraform + AWS EC2 practical for your college Windows PC, including the errors we found and how to avoid them. Follow these steps in order so you can repeat them tomorrow without needing to guess commands.
+
+Important corrections from our previous attempts:
+
+- Terraform is installed separately from your project. Keep `terraform.exe` in its installation folder and create your project in a different folder.
+- If `terraform` is not recognized, fix PATH before running Terraform commands.
+- Use the Mumbai AWS region: `ap-south-1`.
+- Use an Ubuntu AMI that matches the instance type. We previously encountered a UEFI/`t2.micro` compatibility error, so this version uses `t3.micro` and automatically looks up a suitable Ubuntu AMI.
+- On the college PC, do not enter your personal AWS access key or secret key. Use credentials provided by your instructor or the college AWS lab. If none are provided, ask for the lab credentials before creating resources.
+
+## Part 1 — Install and verify Terraform
+
+### Step 1: Check whether Terraform is already installed
+
+Open PowerShell on the college PC and run:
+
+```
+terraform -version
+```
+
+If it shows a version, skip to Part 2.
+
+If you get `CommandNotFoundException`, check these locations:
+
+```
+Test-Path "C:\Terraform\terraform.exe"
+Test-Path "$HOME\terraform\terraform.exe"
+```
+
+If both return `False`, download Terraform for Windows from the official [HashiCorp Terraform downloads page](https://developer.hashicorp.com/terraform/install?utm_source=chatgpt.com).
+
+Choose the Windows AMD64 ZIP matching the PC, extract `terraform.exe` into a folder you can access, such as `C:\Terraform` if permitted. If the college PC restricts writing to `C:\`, use a folder under your user profile instead.
+
+For the `C:\Terraform` location, run:
+
+```
+$env:Path += ";C:\Terraform"
+terraform -version
+```
+
+Expected output resembles:
+
+```
+Terraform v1.x.x
+on windows_amd64
+```
+
+If your executable is in a different folder, substitute that folder in the PATH command. This fixes PATH for the current PowerShell window.
+
+## Part 2 — Check AWS CLI and credentials
+
+### Step 2: Verify AWS CLI
+
+```
+aws --version
+```
+
+If AWS CLI is missing, install it from the official [AWS CLI Windows installation guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html?utm_source=chatgpt.com), subject to college PC permissions.
+
+### Step 3: Configure the college-provided credentials
+
+If your instructor has provided standard IAM access keys for the lab, run:
+
+```
+aws configure
+```
+
+Enter the college/lab credentials, not your personal AWS credentials.
+
+| Prompt                | What to enter           |
+| --------------------- | ----------------------- |
+| AWS Access Key ID     | Lab-provided access key |
+| AWS Secret Access Key | Matching lab secret key |
+| Default region name   | `ap-south-1`            |
+| Default output format | `json`                  |
+
+If the college uses temporary AWS Academy credentials, they may also require a session token. Use the credential setup instructions supplied by the lab; temporary credentials should not be treated as permanent keys.
+
+Now verify:
+
+```
+aws sts get-caller-identity
+```
+
+You should receive JSON containing an account ID and an ARN. If you get `InvalidClientTokenId`, `ExpiredToken`, `Unable to locate credentials`, or `AccessDenied`, resolve the credentials or permissions issue before continuing. Do not share your secret key in chat.
+
+## Part 3 — Create the Terraform project
+
+### Step 4: Create a separate project folder
+
+Run these commands in PowerShell:
+
+```
+New-Item -ItemType Directory -Force "$HOME\terraform-ec2"
+cd "$HOME\terraform-ec2"
+notepad main.tf
+```
+
+If Notepad asks to create the file, click Yes.
+
+### Step 5: Paste this corrected `main.tf` code
+
+Replace the contents of Notepad with the following complete code. Save with Ctrl + S, then close Notepad.
+
+```
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 6.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners      = ["099720109477"]
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "architecture"
+    values = ["x86_64"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+  }
+}
+
+resource "aws_instance" "student_vm" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "Terraform-Demo"
+  }
+}
+
+output "instance_id" {
+  value = aws_instance.student_vm.id
+}
+
+output "public_ip" {
+  value = aws_instance.student_vm.public_ip
+}
+
+output "instance_state" {
+  value = aws_instance.student_vm.instance_state
+}
+
+```
+
+Why this version avoids our earlier errors:
+
+- It automatically searches for an official Canonical Ubuntu 24.04 AMI in Mumbai instead of relying on a potentially unsuitable hardcoded AMI ID.
+- It uses `t3.micro`, avoiding the earlier UEFI incompatibility we encountered with `t2.micro`.
+- The output references consistently use `aws_instance.student_vm`.
+- No inbound security-group rule is added. This practical only needs to provision and display the EC2 instance; it does not require SSH access.
+
+## Part 4 — Initialize and validate
+
+Run these commands one at a time, waiting for each to finish.
+
+### Step 6: Initialize Terraform
+
+```
+terraform init
+```
+
+Expected success message:
+
+```
+Terraform has been successfully initialized!
+```
+
+If provider download fails, check the college internet connection and whether the network permits access to the Terraform Registry.
+
+### Step 7: Format the configuration
+
+```
+terraform fmt
+```
+
+### Step 8: Validate the code
+
+```
+terraform validate
+```
+
+Expected:
+
+```
+Success! The configuration is valid.
+```
+
+If validation fails, do not continue to `apply`. Correct the reported error first.
+
+## Part 5 — Provision the EC2 instance
+
+### Step 9: Preview the changes
+
+```
+terraform plan
+```
+
+The plan should indicate that Terraform intends to create one EC2 instance. It will also look up the Ubuntu AMI.
+
+If AWS reports an authorization error, the lab credentials may lack EC2 or AMI lookup permissions. If it reports a service quota or capacity error, follow the lab's instructions rather than repeatedly applying.
+
+### Step 10: Create the instance
+
+```
+terraform apply
+```
+
+Review the plan. If it is correct, type:
+
+```
+yes
+```
+
+Wait for Terraform to finish. It should show the output values for `instance_id`, `public_ip`, and `instance_state`.
+
+### Step 11: Display the outputs again
+
+```
+terraform output
+```
+
+To see individual values:
+
+```
+terraform output instance_id
+terraform output public_ip
+terraform output instance_state
+```
+
+You can also open the AWS Console, select EC2 → Instances, and check for the instance named `Terraform-Demo` in the Mumbai (`ap-south-1`) region.
+
+## Part 6 — Clean up after the practical
+
+⚠️ Do not leave the EC2 instance running after practice unless your instructor specifically requires it. The instance may incur charges depending on your AWS account and lab terms.
+
+### Step 12: Destroy the instance
+
+```
+terraform destroy
+```
+
+Review the proposed deletion and type `yes` to confirm.
+
+Terraform should report that the resources were destroyed. Verify in the EC2 Console that the instance is no longer running or present as an active instance.
+
+## Quick revision for tomorrow
+
+| Command                       | Purpose                                  |
+| ----------------------------- | ---------------------------------------- |
+| `terraform -version`          | Check Terraform installation             |
+| `aws --version`               | Check AWS CLI                            |
+| `aws sts get-caller-identity` | Verify AWS credentials                   |
+| `terraform init`              | Download provider and initialize project |
+| `terraform fmt`               | Format Terraform code                    |
+| `terraform validate`          | Check configuration syntax               |
+| `terraform plan`              | Preview resource changes                 |
+| `terraform apply`             | Create the EC2 instance                  |
+| `terraform output`            | Display instance information             |
+| `terraform destroy`           | Delete the resources                     |
+
+One important college-PC note: Terraform's PATH setting made with `$env:Path += ";C:\Terraform"` lasts only for that PowerShell session. If you open a new window and `terraform` is not recognized again, repeat the PATH command before starting the practical.
+
+This practical is complete when initialization, validation, planning, creation, output display, and cleanup all succeed.
