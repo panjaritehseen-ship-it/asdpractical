@@ -1,0 +1,387 @@
+I'll give you a complete, exam-ready procedure for tomorrow, based on the actual errors from your Jenkins builds #5 and #10–#13. The goal is to perform the practical on a college Windows PC using a remote GitHub `Jenkinsfile`, automatic polling every five minutes, CI execution, Docker image creation, and web application deployment.
+
+One important point: no procedure can guarantee zero errors on a different college PC, because installed software, permissions, ports, internet access, and Docker configuration may differ. These steps avoid the specific mistakes we encountered and include checks before each major stage.
+
+# Practical: Jenkins CI pipeline with Docker deployment
+
+Aim: Install and configure Jenkins, create a pipeline using a `Jenkinsfile` stored in a remote GitHub repository, check for source-code changes every five minutes, build a Docker image, and deploy the web application using Docker.
+
+## 1. Understand the workflow
+
+GitHub repository
+
+Web files + Dockerfile + Jenkinsfile
+
+Jenkins pipeline
+
+Checkout → CI Check → Build Docker Image
+
+Docker container
+
+Deploy web application → open in browser
+
+You already have a working GitHub repository named `testexp1` and a Jenkins job named `githubtest`. On your own laptop, Jenkins successfully fetched the repository and built the Docker image. We will reuse that approach, but verify the college PC's environment first.
+
+## 2. Check the college PC before starting
+
+Use Windows PowerShell. You do not need Administrator mode for these first checks.
+
+Run these commands one by one:
+
+```
+git --version
+java -version
+docker --version
+docker info
+```
+
+Expected results:
+
+- Git displays a version.
+- Java displays a supported version for the Jenkins release installed by your college.
+- Docker displays a version.
+- `docker info` displays both Client and Server details.
+
+If a command is not recognized, that software is missing from the command-line PATH or is not installed. If Docker shows only the client and an error connecting to the server, start Docker Desktop and wait until its engine is ready.
+
+Check whether the usual ports are occupied:
+
+```
+Test-NetConnection localhost -Port 8080
+Test-NetConnection localhost -Port 8081
+Test-NetConnection localhost -Port 8082
+```
+
+`TcpTestSucceeded: True` means something is listening on that port. If port 8080 is already used by another application, Jenkins may need a different port. If 8081 is occupied, use 8082 or another free port for the website.
+
+Do not uninstall or stop another person's software on the college PC just to free a port.
+
+## 3. Start Jenkins and Docker
+
+### A. Start Docker Desktop
+
+1. Open Docker Desktop from the Start menu.
+2. Wait for Docker Engine to finish starting.
+3. Run:
+
+```
+docker version
+docker info
+```
+
+If both client and server information appear, Docker is ready.
+
+### B. Start Jenkins
+
+If Jenkins is already installed, open:
+
+`http://localhost:8080`
+
+If the page does not open, open PowerShell as Administrator only if you have permission to manage services, then check:
+
+```
+Get-Service Jenkins
+```
+
+If the service exists but is stopped:
+
+```
+Start-Service Jenkins
+```
+
+If Jenkins is not installed, install a compatible Jenkins LTS release and its required Java version according to the official Jenkins Windows installation instructions. You may need college administrator permission.
+
+Official reference: [Jenkins installation on Windows](https://www.jenkins.io/doc/book/installing/windows/?utm_source=chatgpt.com)
+
+Log in to Jenkins. If the college PC already has Jenkins installed and configured, use the credentials supplied by your instructor. Do not assume your personal laptop's Jenkins credentials will work there.
+
+## 4. Prepare the GitHub repository
+
+Use your existing repository:
+
+[GitHub — panjaritehseen-ship-it/testexp1](https://github.com/panjaritehseen-ship-it/testexp1?utm_source=chatgpt.com)
+
+At the root of the repository, make sure these files are present:
+
+Jenkinsfile
+
+Defines the pipeline stages and five-minute polling trigger.
+
+Dockerfile
+
+Instructions for building the web application image.
+
+Web application files
+
+For example, index.html, CSS, JavaScript, or the app's build output.
+
+Your latest successful build already confirms that the Docker image can be built from the Dockerfile in your existing repository. Do not create another Dockerfile if the correct one is already committed.
+
+For a simple static HTML/CSS/JavaScript website, a suitable Dockerfile is:
+
+```
+FROM nginx:alpine
+COPY . /usr/share/nginx/html
+EXPOSE 80
+```
+
+This serves `index.html` from the repository root. If your application is React or another framework that requires compilation, use a Dockerfile suited to that framework instead.
+
+## 5. Configure GitHub credentials in Jenkins
+
+If the repository is public, Jenkins can generally clone it without credentials. If it is private, configure credentials before creating the pipeline.
+
+1. Open Manage Jenkins → Credentials.
+2. Select the appropriate global or system credential store.
+3. Click Add Credentials.
+4. For a private HTTPS repository, select Username with password and enter your GitHub username and a GitHub personal access token as the password.
+5. Give it a clear ID, such as `github-credentials`, and save.
+
+Never paste your GitHub token into the Jenkinsfile or share it in screenshots.
+
+If the college Jenkins already has an authorized GitHub credential, reuse it rather than creating another one.
+
+## 6. Use this Jenkinsfile
+
+Open `Jenkinsfile` in your existing GitHub repository. Keep exactly one stage with each name. The following version avoids the duplicate checkout stage seen in your earlier logs and uses port `8082` instead of the occupied port `8081`.
+
+```
+
+pipeline {
+    agent any
+
+    options {
+        skipDefaultCheckout(true)
+    }
+
+    triggers {
+        pollSCM('H/5 * * * *')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('CI Check') {
+            steps {
+                bat 'echo CI pipeline executed successfully'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker version'
+                bat 'docker build -t testexp1-webapp:%BUILD_NUMBER% .'
+            }
+        }
+
+        stage('Deploy Using Docker') {
+            steps {
+                bat 'docker rm -f testexp1-webapp-container 2>NUL || exit /b 0'
+                bat 'docker run -d --name testexp1-webapp-container -p 8082:80 testexp1-webapp:%BUILD_NUMBER%'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'CI pipeline and Docker deployment completed successfully.'
+        }
+    }
+}
+
+```
+
+Before using this version, note these requirements:
+
+- The Jenkins agent must be a Windows machine because the pipeline uses `bat`.
+- The repository must contain a suitable `Dockerfile` in its root.
+- Docker CLI must be available to the Jenkins process, and Docker Desktop's engine must be accessible.
+- Port `8082` must be free. If it is occupied, select another free port and change the left-hand port in `-p 8082:80`.
+- This image command tags each build using Jenkins' build number, so Build #14 would create `testexp1-webapp:14`.
+
+Commit the file to the repository's `main` branch.
+
+## 7. Create or configure the Jenkins pipeline job
+
+If the `githubtest` job already exists on the college PC, open it and check its configuration. Otherwise:
+
+1. From the Jenkins dashboard, click New Item.
+2. Enter `githubtest`.
+3. Select Pipeline and click OK.
+4. In the job configuration, find the Pipeline section.
+5. Set Definition to `Pipeline script from SCM`.
+6. Select Git as the SCM.
+7. Enter the repository URL:
+
+   `https://github.com/panjaritehseen-ship-it/testexp1.git`
+8. Set the branch specifier to `*/main`.
+9. Set Script Path to `Jenkinsfile`.
+10. Save the configuration.
+
+If the repository is private, select the GitHub credential you configured in Step 5.
+
+This setup makes Jenkins fetch the pipeline definition from GitHub, instead of requiring you to type the pipeline into the Jenkins interface.
+
+## 8. Handle the Docker PATH problem before the actual run
+
+This is important because it caused your first Docker build failure.
+
+On your personal laptop, this command worked in PowerShell:
+
+```
+docker --version
+```
+
+But Jenkins initially reported:
+
+```
+'docker' is not recognized as an internal or external command
+```
+
+That happened because Jenkins runs as a service and may not inherit the same PATH as your interactive PowerShell session.
+
+On the college PC, first open a normal PowerShell window and run:
+
+```
+where.exe docker
+docker version
+docker info
+```
+
+If these commands work in PowerShell but Jenkins reports that `docker` is not recognized:
+
+1. Find the actual folder containing `docker.exe` using `where.exe docker`.
+2. Ask the college administrator to add the containing folder to the Windows system PATH, if permitted.
+3. Restart the Jenkins service so it picks up the updated environment.
+4. Run the pipeline again.
+
+If Docker is installed only inside a user's profile directory, a service running under another account may not be able to access it. In that case, use an administrator-approved Docker installation and service configuration. Do not change service accounts or permissions without authorization.
+
+If Jenkins can find Docker but reports a daemon or named-pipe access error, the problem is different: the Jenkins service can see the CLI but cannot access Docker Desktop's engine. Ensure Docker Desktop is running and use an authorized service configuration.
+
+## 9. Run the practical and verify each stage
+
+Once the job is saved and Docker is running:
+
+1. Open `githubtest`.
+2. Click Build Now.
+3. Open the new build number.
+4. Click Console Output.
+5. Check that all four stages complete successfully.
+
+The expected output will look approximately like this:
+
+| Stage               | Expected result                                      |
+| ------------------- | ---------------------------------------------------- |
+| Checkout            | Repository fetched and checked out from GitHub       |
+| CI Check            | `CI pipeline executed successfully`                  |
+| Build Docker Image  | `Successfully tagged testexp1-webapp:<build-number>` |
+| Deploy Using Docker | A container ID is printed                            |
+
+A green build result means the pipeline completed successfully. A successful image build alone is not sufficient: verify that the deployment stage also succeeded.
+
+### Verify the deployed website
+
+Open PowerShell:
+
+```
+docker ps --filter "name=testexp1-webapp-container"
+```
+
+The container should appear as running, with a port mapping similar to:
+
+```
+0.0.0.0:8082->80/tcp
+```
+
+Then open the website in your browser:
+
+Deployed web application
+
+Open only after the deployment stage succeeds.
+
+Open localhost:8082
+
+If the container is running but the website content is wrong, check whether your `index.html` is at the repository root. The simple Nginx Dockerfile serves static files; it will not automatically compile a React application.
+
+## 10. Demonstrate automatic polling every five minutes
+
+Your Jenkinsfile contains:
+
+```
+triggers {
+    pollSCM('H/5 * * * *')
+}
+```
+
+This tells Jenkins to check the remote Git repository approximately every five minutes for changes. It does not mean the website is redeployed every five minutes regardless of changes.
+
+To demonstrate it during the practical:
+
+1. Confirm the initial build succeeds.
+2. Make a harmless change to a tracked file in GitHub, such as adding a comment to `index.html`.
+3. Commit the change to `main`.
+4. Wait for the next SCM poll.
+5. Check Jenkins' build history for a new build triggered by an SCM change.
+
+Polling may take several minutes to trigger, so don't rely on it if the examiner gives you very little time. You can use Build Now to demonstrate the pipeline immediately and explain that the polling trigger handles subsequent changes automatically.
+
+## 11. Common errors and the exact fix
+
+| Error                                 | What to check                                                                                                                  |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `docker is not recognized`            | Docker CLI PATH for the Jenkins service; see Step 8.                                                                           |
+| `Dockerfile not found`                | Commit `Dockerfile` to the repository root. Check spelling and capitalization.                                                 |
+| `port is already allocated`           | Choose another free host port and update the `docker run -p` mapping.                                                          |
+| `Duplicate stage name`                | Keep only one stage named `Deploy Using Docker`.                                                                               |
+| `Authentication failed`               | Check GitHub credentials and repository permissions.                                                                           |
+| `Cannot connect to Docker daemon`     | Start Docker Desktop and check Jenkins' access to its engine.                                                                  |
+| `index.html` or app content not found | Check the Dockerfile's `COPY` path and the application's file structure.                                                       |
+| Polling does not trigger              | Confirm `pollSCM` is in the committed Jenkinsfile, the job uses `Pipeline script from SCM`, and the remote branch has changed. |
+
+If you need a different port, remember that `-p HOST_PORT:CONTAINER_PORT` maps the port on the college PC to the port inside the container. For example, `-p 8083:80` means open `http://localhost:8083` while Nginx still listens on port `80` inside the container.
+
+## 12. What to explain to the examiner
+
+You can use these short explanations during the viva:
+
+- Jenkins: An automation server used to build, test, and deploy software.
+- Jenkinsfile: A text file that defines a Jenkins pipeline as code and is stored in the source repository.
+- CI: Continuous Integration; changes are checked and processed through an automated pipeline.
+- SCM polling: Jenkins periodically checks the source repository for new commits.
+- Docker image: A packaged template containing the application and the environment needed to run it.
+- Docker container: A running instance of an image.
+- Dockerfile: Instructions used to build a Docker image.
+- Deployment stage: Runs the built image as a container and maps a host port so the application can be accessed through a browser.
+
+### Final checklist for tomorrow
+
+### Practical readiness
+
+0 of 10
+
+Git is installed and accessible in PowerShell
+
+Java and Jenkins are installed and Jenkins dashboard opens
+
+Docker Desktop is running and docker info shows the server
+
+GitHub repository contains Jenkinsfile, Dockerfile and application files
+
+Jenkins job uses Pipeline script from SCM, branch main, script path Jenkinsfile
+
+GitHub credentials are configured if the repository is private
+
+Docker CLI is accessible to the Jenkins service
+
+Selected host port is free
+
+Build Now completes all four stages
+
+Container is running and the website opens in the browser
+
+My strongest recommendation: before leaving home, confirm the GitHub `Jenkinsfile` and `Dockerfile` are committed and that your personal laptop's latest pipeline deploys successfully. At college, verify the software and ports first, then use the existing repository rather than recreating the project from scratch.
