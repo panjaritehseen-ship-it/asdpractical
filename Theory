@@ -1,0 +1,1921 @@
+[10/29, 12:32 AM] Tehseen Panjari: ### Practical 1: To Study and Implement Agile Software Project Lifecycle Using Jira, Integrate with GitHub and AWS
+
+Below is an exam-ready answer with simple theory and step-by-step performance instructions based on what you actually did: created a project in GitHub, connected it to Jira, and deployed/hosted it using AWS Amplify.
+
+### 1\. Aim
+
+To study and implement the Agile Software Project Lifecycle using Jira for project management, GitHub for source code management, and AWS Amplify for application hosting and deployment.
+
+### 2\. Theory
+
+Agile is a software development methodology in which a project is divided into small parts called iterations or sprints. Each sprint delivers a small working part of the software. Agile encourages continuous feedback, teamwork, testing, and improvement.
+
+The Agile Software Project Lifecycle consists of the following stages:
+
+* Requirement gathering: Collect and understand the requirements of the software project.
+
+* Planning: Divide the project into tasks and plan the work to be completed during each sprint.
+
+* Design and development: Design the application and write its source code.
+
+* Testing: Test the application to identify and correct errors.
+
+* Deployment: Make the completed application available to users.
+
+* Review and feedback: Collect feedback, identify improvements, and plan the next sprint.
+
+### Tools used
+
+| Tool        | Purpose                                                                     |
+| ----------- | --------------------------------------------------------------------------- |
+| Jira        | Creates tasks, manages the backlog, tracks progress, and organizes sprints. |
+| GitHub      | Stores source code and tracks changes using Git.                            |
+| AWS Amplify | Hosts the web application and supports automated deployment from GitHub.    |
+
+### Working of the integrated system
+
+Jira
+
+Plan tasks, create issues, track sprints
+
+GitHub
+
+Store code, commit changes, manage branches
+
+AWS Amplify
+
+Build and deploy the web application
+
+Live Web Application
+
+Application accessible through a hosting URL
+
+Note: Jira and GitHub integration connects development activities with project tasks. AWS Amplify connects to the GitHub repository to build and deploy the application. These are separate integrations.
+
+### 3\. Requirements
+
+* A Jira account
+
+* A GitHub account and project repository
+
+* An AWS account
+
+* A web application with source code
+
+* An internet connection
+
+### 4\. Procedure / Steps of Performance
+
+### Part A: Create and manage the project in Jira
+
+![Produkt-Backlog-Vorlage | Jira Templates](https://images.openai.com/static-rsc-4/on4XNLecZ1DIMD-OQkYOCUy4E1URYGeVpa5bCmdN4ER7Yqq2n7dqRm5Q1VAdQFBkl_pb-ZcLI9pg4q7pIpwLfjpDDNLWi0uazOBTDJRKH8Hu4ptaVfMORgR2G4GAhm892CW_7FAnQxptExRrA2ngalSXhRs_RbtBlI2sTCg9G78cRTRWozwd87WnFkEJDgWw?purpose=fullsize)
+
+![Using Jira for Scrum Teams | Steady](https://images.openai.com/static-rsc-4/QTNOuHr8Ljm7CAuIdgwkhStZTKkAnuDi3yQbn7QWTYyMBkdEoSHCf04ik4-rc97vBwkNQZQzfi69VqPLGwN2xQ3BpB1Gyl5YiMi3QIGMjqIX71wz9eUQ1ENJlIUCEkvmxY7Ze0uA445Nfjefy1AKS-jUjBFnhEzhY9C-W7ndyj0MrbvJ5Eej779UIE8ZrDng?purpose=fullsize)
+
+![Jira for Project Management: A Starter's Guide](https://images.openai.com/static-rsc-4/g7WQiG91i0NQZqb--rgUgfBhkxasYPauyllhi_EYHUMHV9wY0X3jRglfbSi4H38p5udqdiq1QVlKLsoj2nE4UATPN-Ea_9rJ62JhmYYad8D-GaTDgeNDRF5Cux541bsgMtZiNbbx9K0DItjfeF9L1fSVSjGyEXpZsbl-wVE2_5t2mIhtwmmqIgZlTO2vUabI?purpose=fullsize)
+
+![How to Create Sprint in JIRA Scrum Board?](https://images.openai.com/static-rsc-4/Kzz8EVwukhBlYmKcqHvTiQ6-pN2RZJ-bdawI40P_2JCvUNqbT5klzSAS6Kv0hybPKZG3eDwNy3O9kvRHrD_zlneImpQliuhjrWu5aanpeR7J9BasJifhAiI4hQcQvJA6j7Rxha_P7gpeCVDoedVJFOb61TCGIXi5k6_9pNxd1hFGJLXKB08xtHUt4zI1cDZG?purpose=fullsize)
+
+![Upcoming - Rename ‘epics’ in your company-managed projects](https://images.openai.com/static-rsc-4/Z1c-oaP7f4M2umDJn0FBfwYLUkWVCBX_57TAop22xt8aLmhMf2smxkaJ0Bb2hboqNzcnmaIQR9fls8opHH3vQ8ndd1qItTWvffNezSA4L7YSW0PqHjTjuogxPu1em2s-EH-UIM6maawQhScH6TRmehTVGrbZGRC4QJaAyH3DJ8E0u15qXN4_Yr8smcvyU67H?purpose=fullsize)
+
+![Workflow template | Jira](https://images.openai.com/static-rsc-4/s0FGmWslwsfXJxdxUHZb-0D7o2lXGdQsyUZBmXHU9lBgBhGA97VnKfRTQPtPbxhMm54uWimIdMQNyzjiSrSvhcP_dJGYetYsCL2RR6awAnXYXAuxtYazpEz3FEb-bXOjO3tcejtWZSiIvSPMsUYqneYj-ndC0C_H0MxVmIalv-yX9G0K15aeKW3jlnehJWSA?purpose=fullsize)
+
+* Open [Jira](https://www.atlassian.com/software/jira?utm_source=chatgpt.com) and sign in.
+
+* Create a new project and select a suitable template, such as Scrum or Kanban.
+
+* Enter the project name and create the project.
+
+* Create issues or tasks for the project, such as designing the interface, developing features, testing, and deployment.
+
+* Assign tasks to team members and set priorities.
+
+* Move tasks across the board, such as To Do → In Progress → Done, as the work progresses.
+
+* If using Scrum, create a backlog and sprint, then start the sprint to track the planned work.
+
+### Part B: Create the project in GitHub
+
+![Continuing with Git and GitHub 🐱 – OSU Code Club](https://images.openai.com/static-rsc-4/VnbIkztrtjLKlMMCeZbMUlrEU4YZpYqIOoYeiqc3wDe71NpIbl6JGB5JGiwrwq4tygtz8IMiKwr6R7vBj_-WICWMAGq9RlpF6gSGSPq68COeLdAeqXu_ocxBrFSM3IUYjnNtiqH13SBp9YceJWHTHna-1jyFGZ1X24E8xod_wbTzDzstgwch46mbxgW45KZw?purpose=fullsize)
+
+![How to Use Git and GitHub in a Team like a Pro – Featuring Harry and Hermione 🧙](https://images.openai.com/static-rsc-4/505O2Qh0GppA77ygrry_Fq3GPuK7yrdnsacAQavEXpJrltpLxA85zCQNFTX2ZT03ccwDxbXJr9eYtnQu8a_X53syO2-CzDQmY-n1jVDAmqg63tqsDoOPglGCjTi7XyMSwyuPNDIRNg2XdeCNVEuwHRk8BxvPPA7yr4n-0LH7fWB4y9iRS6vsOvaecV9sMN8j?purpose=fullsize)
+
+![Developing Software In a Team: Code Review – Intermediate Research Software Development](https://images.openai.com/static-rsc-4/seCF3FkF2DryAepq24Fx2r0U2k-o0MTqFft086YWjTKOwpy5H9o_P_GN4hkbTLb9k1_zebztW6VIGo5vqCGYa6NhZsdmUT58wzuFu9SkHVimE5NXmGO3QjEH0tGjDW-OoDDY3_NJ_vXRyd969ZapJijccSZDAiQq5Ll3j3n-Nxj6gThNFIl4qUkiQR9nYC0p?purpose=fullsize)
+
+![Version control systems – Versioning of data and code using Git](https://images.openai.com/static-rsc-4/iv8D5oF03tiWn9R6Zu3RGl6HSrS1PYrEAG3aPx0d06cF32ldx2YwNM4mawd8S7prR1P5Y67bXdJbIR9DciVasDbCBpTTYQGfAqsDOlXFox1nKiDw5Xcaw8KOteHaIEamkksn99LmtVANAFEdEfnruGtlArVxKMEwq-anu_Phre6gLiZjtI6gwl2jT4MIM18n?purpose=fullsize)
+
+![GitHub Actions Secrets](https://images.openai.com/static-rsc-4/KCmYzeIU_RTyRQvR18ofHun52_QEI6I9wUrS-MIF7ubnWIGC9VdhkWlFZPo21urTEhiquLi72Wr58fDakRfEssMHMHV2r07sdd3DDycFIC-NZhMcTLLOYdgia36zf3Ee-3EvqQNwkmd6nauN51aUm9SBcSYQ2kMhfwwvEGW2UaLE_cAWsRV80KpDIcsXOOVH?purpose=fullsize)
+
+![How to Host Your Project on GitHub – Explained With Examples](https://images.openai.com/static-rsc-4/30Gk90pblKTQHmKu4sYFKz9biGOzZxl-H9lo9DJfYGzFLnQepaOlUcb6ovLo9zws8S7E_4F1USX-VmUj5imk3CN8W_W5cfeO0LE6lCiTb603v9S7rRx0Za5YATHIzqgnlaT00RsCckTlhJaFgtGVkZfe1xoLx0oTOWSa2GsA05g2ERSt8s2iPohz0VTWzO7g?purpose=fullsize)
+
+![Setup GitHub Repository | ChainSafe Engineering Handbook](https://images.openai.com/static-rsc-4/fTSm-zejFoIZaZUB-KcmUMLfg01ORI9i_ZfJnJma9CMiE851xdw6q706OtAKq5JO53DNtOH5QTZDSVUfqeFnYs-7CYC3MSDfcPyxyevK2ie7rfV1vukql8wvWFnHSJ6S7p23U0AZO4BOHldFpa_rsakUHFwE4j1qfUvnD5DwwLFud-29rm4YExO0R49Celve?purpose=fullsize)
+
+* Open [GitHub](https://github.com?utm_source=chatgpt.com) and sign in.
+
+* Create a new repository for your project.
+
+* Upload or push your project source code into the repository.
+
+* Commit changes with meaningful commit messages.
+
+* Use branches when working on new features or modifications.
+
+* Open the repository and verify that the source code and project files are available.
+
+If the project already exists in GitHub, you can continue with your existing repository.
+
+### Part C: Integrate GitHub with Jira
+
+![GitHub connector for Jira | Atlassian Marketplace](https://images.openai.com/static-rsc-4/l1geGjlJb7SITUDV_JVvXNH7QDNjC4V1udwbV4w9NUhXcNJe91WLyGukVTB-_S-psaNc1XUzmUpkZUTB-rwlubmgOGRaG4JObBH4zJsslIlrgwTCmtXO3rPUHj9NGzZPLvhlwgANCsrbpGEMg_U-VNrrG4O4Tn27lVSlaL27Z997uDLd8qBiTdpNJ6oYV2SZ?purpose=fullsize)
+
+![Solved: automation - pull request merged](https://images.openai.com/static-rsc-4/PpllD4DhN8BR3iFNmiVbGsojtK4RZgI0DrcghX5zGXP-EyYw2XazDpfepkbM9E6nOYGhINgywDvkj_oB0KPVSA-aR-McUfhg8uM_nbtQ-uX57srTTGarXeWGPlbjv8N72MNv89tUq9ZGdh2Ro8ChcbD5sB-CB0POhJ3nL-B6GPrhVjS-Di37KBpYoDnNmFC7?purpose=fullsize)
+
+![GitHub Links for Jira | See PRs, Commits & Issues in Jira](https://images.openai.com/static-rsc-4/Le4jUWp678zU9-IH2M8RMdxRfoqtyede16Icr7uZi1XbBpy-L5S4qG28Wbv-yJbzjzpH01F77bSGtCMcb2LPmG-JLR8f4uu8Gi4wGTcQ4c6hdnujSvJJHGVQP9mJYbZxueZ6aNRSPWfpbdEuzkMR_r7u59zSVNO_Y74Z-xzU-lXkfxQXrh0mvQuTvTru7FHV?purpose=fullsize)
+
+![A Git and Jira Integration Guide: How to Connect GitHub, GitLab, and Bitbucket to Jira Cloud - DEV Community](https://images.openai.com/static-rsc-4/sKCpH_NqP09pkQOPm6n-iE-NoCuB2j772DP-4DSiYr27pMbzqThxp1zFudANM3bIYOpLI19tyf-WgY9EmS71QTbARMmOBHcrixFohishrX5mooTEiY-H5NFQ4e5hRNkkaNSObwK1ml05PhFDpboUpALeMf7n7wrHY-mqSepkNnhJC4PcWDXBl_RuQugsYCa3?purpose=fullsize)
+
+![Integration is not working at all - IP Allowlist · Issue #763 · atlassian/github-for-jira · GitHub](https://images.openai.com/static-rsc-4/d_ATRtCCENsUozp8kh3vr0VlBLezcTaO_5fXsfESa1Z_We4iE7aga9OL5Q4q7s_uN19ZKegUs_ItunlaBzKOallsuyi85t1AipG2X8WxXum4bAhi6tAb0b6pCjFm6hxHA0JF4ZPVOypn2QYJGtDz35QacfbneDzkRE6WqoasoCNnS8mWgu4WfJ3TbsbNG2VA?purpose=fullsize)
+
+![How to link the branch to the Jira issue?](https://images.openai.com/static-rsc-4/49p2NVRZWdHHMlqq-Hw-bgglD8VbSrlqyNftNgeS0akm7HIjxGu4bRUfu9tKTQ71Omaiq6wbXH8x18730m7uAHGYIk0ogJ4GusORL6q3yiPJZsPT6tCUAy9lz1QyDxWyyOrmGuNx8F6CLwuABUMTaO3XwFCC-L2e6FOpKAOp1fBTt3Bs5VspRBrM-UMZgTsT?purpose=fullsize)
+
+* Open Jira and go to the administration or Apps section.
+
+* Find the GitHub integration option, such as GitHub for Jira, and install or configure it if required and permitted.
+
+* Authorize the GitHub account or organization and grant the necessary repository access.
+
+* Select the repository that contains your project.
+
+* Link development activity to Jira issues by including the relevant Jira issue key in a branch name or commit message, where supported.
+
+* Open the linked Jira issue and check the Development information for associated commits or pull requests.
+
+For example, if the Jira issue key is `AGILE-1`, a commit message could be:
+
+`AGILE-1 Add project homepage`
+
+This allows Jira to associate the development activity with the relevant issue. If the integration is already connected, verify the connection rather than repeating the setup.
+
+### Part D: Deploy the project using AWS Amplify
+
+![Improve Your App Testing With Amplify Console’s Pull Request Previews and Cypress Testing | AWS News Blog](https://images.openai.com/static-rsc-4/tcpQ3il_iZj0Bsey3ch2o3CLvVRKTxV1yG-D_qlpKjrrQgJVheoBuxbuwcJ3FSgYeMB4o2vrlA609Dr3I_eHP1Y8qOhMmxTfnqW4EcheuJj-rVFmcpsGWpXKR3Y2UWG9JoAsDW_dZowDKC_hAnAgOsDjkH7DnyxIqDgryR2OXam8mY6rVUWbY6RnTYcn7qjK?purpose=fullsize)
+
+![Host React App with AWS Amplify and GitHub - DEV Community](https://images.openai.com/static-rsc-4/DkWU-9wXvfzn3dUMi_MYqXUNL_MTkx6BT2p4z9wjngsdOzFGQPUWSt9s4G_IZ4wKqAf2sDSOAcWAPve6gjerwS1uaxwtzsx3g5KsuBgzflFfPqlvZJiw6nTBLw83zKm4a2zTqUB6L91C_g2yLD4_CLl9C3MG1TFvyVZZ4D5aorb46iIlCSv6Yy6y8I0ORp_O?purpose=fullsize)
+
+![How to Deploy Your Own Blog with AWS Amplify](https://images.openai.com/static-rsc-4/C2Uh6bUf4JerNQ7NGzu4Pbhjt1Z-XvRVfD5xn9z9M5ST1Ddvq5sk-EJ9qQRIQPT_6GlS9k_S0ImeiDFNaRYo29It_9s0tXRJq-OZTB18ze565eY3RBRK28CmGN4YKGDBWZ02yXS7GYQazw1snDXMleUlpgbbZdgR8uNbljjx6Fe2hqB4NSjPeu_YhT6m64is?purpose=fullsize)
+
+![How to host your website in 3 steps using AWS Amplify - Nicholas Pazienza](https://images.openai.com/static-rsc-4/DFf8FFIehdLZaWV8iA2HSFmzNQRA1Zbb1RIDFrjqYHIiRoyO0Fe8_C6OEq6K2m9z2SSXIbLeA4IB9nEfV7Y1kOqzfMAPNPD0y_MuBB2ybpt69Irjkz_PZgnQKteGhD2TT0iTSEzG9qZuGzzrH2B9uRY63vkAxL9Ds340uMWHNzDoMnt_l9OjRZWNfHoMF_p8?purpose=fullsize)
+
+![Harnessing Cloud Technologies and Generative AI for Modern App Development with AWS Amplify | by Wipro Tech Blogs | Medium](https://images.openai.com/static-rsc-4/JOphz6aQRXIFiXtb4ZBLlAHkMNzaaj45ayqUcwtzhHiJK1qLT_DYVXbwW2WW1Th6fJWK87M5JmkUkitCe4IH3xxYkxgJBQuxU-bo-HljDcMjsZEqNxoSJSeOavbiOSlUw0mJoFpjOcdSE-KAxtlh48Vh_eZ-VMUv7IW3WG_LTilcy8BfK8B3P9mXXRKotlxF?purpose=fullsize)
+
+![Task 1: Deploy and Host a React App - Build a Full Stack React Application](https://images.openai.com/static-rsc-4/_mWWv7cGyXm1nWHQDhgmpmoO6HZ9Tkp9mDS7Gso-i1S_-7Ctss2_LskXr_ztP8uEKBzQqSpKaCHcHJA7NxFI0N4qB-DLXguMAXEd5LGInnNKw6eOpw321nd6hDORvMS4aeeC4zJmK4YziCzS2mFOgAqwBAtYYRD-V0j3i6fwpXqwpYBWOvQ9LaVnPGndMKST?purpose=fullsize)
+
+* Open the [AWS Management Console](https://console.aws.amazon.com/?utm_source=chatgpt.com) and sign in.
+
+* Search for AWS Amplify.
+
+* Open Amplify Hosting and choose the option to create or host a web application.
+
+* Select GitHub as the source provider.
+
+* Authorize AWS Amplify to access the required GitHub repository.
+
+* Select the repository and the branch you want to deploy, such as `main`.
+
+* Configure the build settings if Amplify does not detect them automatically. Check the framework-specific build command and output directory.
+
+* Review the settings and choose Save and deploy.
+
+* Wait for the build and deployment process to complete successfully.
+
+* Open the generated Amplify hosting URL and verify that the application works correctly.
+
+After setup, new commits pushed to the connected branch can trigger automatic builds and deployments, depending on the configured settings.
+
+Important: Amplify Hosting is suitable for supported web applications. If your project is only a Flutter Android application, Amplify Hosting will not directly host the installed Android app; it can host a supported web frontend instead.
+
+### Part E: Test the complete lifecycle
+
+* Create or select a task in Jira.
+
+* Make a small change to the project source code in GitHub.
+
+* Commit and push the change to the connected branch.
+
+* Verify that the corresponding development activity appears in Jira, if the integration is configured correctly.
+
+* Check AWS Amplify to confirm that the build and deployment succeed.
+
+* Open the live URL and verify the updated application.
+
+* Update the Jira task status after completing and verifying the work.
+
+### 5\. Result
+
+The Agile Software Project Lifecycle was studied and implemented using Jira for project and task management, GitHub for source code management and integration with Jira, and AWS Amplify for web application hosting and deployment.
+
+### 6\. Viva Questions
+
+1\. What is Agile?
+
+Agile is a software development methodology that develops software in small iterations and supports continuous feedback and improvement.
+
+2\. What is Jira used for?
+
+Jira is used to create tasks, manage backlogs, organize sprints, and track project progress.
+
+3\. What is GitHub?
+
+GitHub is an online platform used to store, manage, and collaborate on source code using Git.
+
+4\. What is AWS Amplify?
+
+AWS Amplify is a service that helps developers build, host, and deploy supported web applications.
+
+5\. What is a sprint?
+
+A sprint is a fixed period during which a team works to complete a selected set of tasks.
+
+6\. What is the advantage of integrating these tools?
+
+It connects project planning, code development, and deployment, making the development process easier to track and manage.
+
+7\. What is Continuous Deployment?
+
+Continuous Deployment is the practice of automatically releasing code changes to the target environment after the configured build and validation process succeeds.
+
+Exam tip: Remember the sequence Jira → GitHub → Jira integration → AWS Amplify → Test live URL. This matches the work you performed and makes the practical easier to explain during your viva.
+[10/29, 12:32 AM] Tehseen Panjari: Exp1
+[10/29, 12:43 AM] Tehseen Panjari: ### Practical 2: Install Git and Demonstrate Git Commands
+
+### 1\. Aim
+
+To install Git and demonstrate the commands `git init`, `git add`, `git commit`, `git push`, `git pull`, `git branch`, `git merge`, and `git diff` for version control and source code management.
+
+### 2\. Theory
+
+Git is a distributed version control system (VCS) used to track changes in source code, maintain different versions of a project, and support collaboration among developers. Git allows developers to work on separate branches and merge their changes when the work is completed.
+
+GitHub is an online platform used to host Git repositories and collaborate with other developers.
+
+Git maintains three important areas:
+
+* Working Directory: The folder where project files are created or modified.
+
+* Staging Area: The area where changes are selected before committing.
+
+* Local Repository: The area where committed changes are stored in Git history.
+
+Working Directory
+
+Create or modify files
+
+`git add`
+
+Staging Area
+
+Select changes for the next commit
+
+`git commit`
+
+Local Repository
+
+Save a version in Git history
+
+`git push` / `git pull`
+
+Remote Repository (GitHub)
+
+Share and synchronize code
+
+### 3\. Git Commands and Their Uses
+
+| Command    | Purpose                                                   |
+| ---------- | --------------------------------------------------------- |
+| git init   | Initializes a new local Git repository.                   |
+| git add    | Adds changes to the staging area.                         |
+| git commit | Saves staged changes in local repository history.         |
+| git push   | Uploads local commits to a remote repository.             |
+| git pull   | Fetches and integrates changes from a remote repository.  |
+| git branch | Creates or lists branches.                                |
+| git merge  | Combines changes from one branch into another.            |
+| git diff   | Displays differences between file versions or Git states. |
+| git status | Shows the current state of files and staging.             |
+| git log    | Displays commit history.                                  |
+
+### 4\. Requirements
+
+* Windows computer
+
+* Internet connection
+
+* Git installed
+
+* GitHub account
+
+* A project folder
+
+### 5\. Procedure / Steps of Performance
+
+These steps use Windows PowerShell, similar to the terminal you used previously. Follow them in order.
+
+### Step 1: Install Git
+
+![Git Installation - Launch Curriculum - Turing School of Software and Design"](https://images.openai.com/static-rsc-4/RsWCdDMxQgCV-COLJtQHs7G5ij6Vi5p3PUGgZGopU3QfIbjhflBFERKFT9vnEEv-9ZHuNrUmWyOnV-ZxZlhIS87LBxusRhcmNK3fuoRL-4kDASBibiZluwdaU2qCj8o0wA6mZTF0yQfzAy8Zaloq9yVvbCg6xvuCTykcPWgZku8uVJLEurgcHp-xcMruIYyC?purpose=fullsize)
+
+![Install and Setup Git | Get Git!](https://images.openai.com/static-rsc-4/cORyg3_RqCrsslr5jY3Ra8zFlfHIOjY4rLj8cJra1jTs83YPT_mf6cDe53RCwkp0ZiO2SMNAlzcJnYFdrT5fpxdgq_aDjYCsgDVkxvk_yYmxqfFSOHk_g4c4dZCHm_XXozMRbSUQin1IfHmEivOxtfaSz9EfgAd1j_JfUsq9y5Gjg-O6kwsg7qffS30ZWlC2?purpose=fullsize)
+
+* Open the official website: [https://git-scm.com/install/windows](https://git-scm.com/install/windows?utm_source=chatgpt.com).
+
+* Download the Git for Windows installer.
+
+* Run the installer and use the default options unless your lab requires different settings.
+
+* Open PowerShell or Git Bash.
+
+* Verify the installation using:
+
+```powershell
+git --version
+```
+
+Expected output will be similar to:
+
+```text
+git version 2.x.x.windows.x
+```
+
+The exact version depends on the installed release.
+
+### Step 2: Configure Git
+
+Run these commands once on the computer to configure your identity.
+
+```powershell
+git config --global user.name "Student Name"
+git config --global user.email "student@example.com"
+```
+
+Replace the example name and email with your own details. The email should preferably match the one associated with your GitHub account.
+
+Verify the configuration:
+
+```powershell
+git config --global --list
+```
+
+### Step 3: Create a project and initialize Git
+
+Create a new project folder and enter it.
+
+```powershell
+mkdir GitPractical
+cd GitPractical
+```
+
+Initialize the repository:
+
+```powershell
+git init
+```
+
+Expected output:
+
+```text
+Initialized empty Git repository ...
+```
+
+This creates a hidden `.git` d
+[10/29, 12:53 AM] Tehseen Panjari: ### Practical 3: Continuous Integration Using Jenkins Pipeline and Jenkinsfile
+
+### 1\. Aim
+
+To install Jenkins and implement Continuous Integration (CI) using a Jenkinsfile stored in a remote GitHub repository, with automatic change detection every 5 minutes.
+
+### 2\. Theory
+
+Jenkins is an open-source automation server used to automate software building, testing, and integration. Continuous Integration (CI) is a practice in which code changes are regularly integrated into a shared repository and validated through an automated pipeline.
+
+A Jenkinsfile defines the pipeline stages as code. Jenkins connects to GitHub, checks for code changes, and executes the pipeline automatically.
+
+### 3\. Requirements
+
+* Windows operating system
+
+* Java JDK
+
+* Jenkins
+
+* Git
+
+* GitHub repository
+
+### 4\. Procedure / Steps of Performance
+
+### Step 1: Install and start Jenkins
+
+* Install Java JDK and verify it using `java -version`.
+
+* Install Jenkins using the official website: [https://www.jenkins.io/download/](https://www.jenkins.io/download/?utm_source=chatgpt.com).
+
+* Start the Jenkins service.
+
+* Open `http://localhost:8080` in a browser.
+
+* Enter the initial administrator password, complete the setup, and install the suggested plugins.
+
+### Step 2: Prepare the GitHub repository
+
+* Create a GitHub repository named `testexp1`.
+
+* Add the project files and a `Jenkinsfile` to the repository root.
+
+* Commit and push the files to the `main` branch.
+
+### Step 3: Create a Jenkins pipeline job
+
+* Open `http://localhost:8080`.
+
+* Click New Item.
+
+* Enter the job name `githubtest`.
+
+* Select Pipeline and click OK.
+
+* Under Pipeline, select Pipeline script from SCM.
+
+* Select Git as the SCM.
+
+* Enter the repository URL:
+
+    `https://github.com/panjaritehseen-ship-it/testexp1.git`
+
+* Select the configured GitHub credential `github-credentials` if required.
+
+* Set the branch to `*/main`.
+
+* Set Script Path to `Jenkinsfile`.
+
+* Click Save.
+
+### Step 4: Configure automatic polling
+
+* Open the `githubtest` job and click Configure.
+
+* Under Build Triggers, enable Poll SCM.
+
+* Enter the schedule:
+
+```text
+H/5 * * * *
+```
+
+4\. Click Save.
+
+This schedule checks the repository approximately every 5 minutes for changes.
+
+### Step 5: Jenkinsfile
+
+Create a file named `Jenkinsfile` in the root of the GitHub repository with the following content:
+
+```groovy
+pipeline {
+    agent any
+
+    triggers {
+        pollSCM('H/5 * * * *')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('CI Check') {
+            steps {
+                bat 'echo CI pipeline executed successfully'
+            }
+        }
+    }
+}
+```
+
+Commit and push the Jenkinsfile to GitHub. The polling schedule can be configured in the Jenkins job as well; using both settings is redundant but keeps the schedule documented in the pipeline.
+
+### Step 6: Execute and verify
+
+* Open the `githubtest` job.
+
+* Click Build Now for the initial execution.
+
+* Open Console Output and verify that checkout and the CI Check stage complete successfully.
+
+* Make a small change in the GitHub repository and commit it to `main`.
+
+* Wait for the next polling check.
+
+* Verify that Jenkins automatically starts a new build and that the build status is successful.
+
+### 5\. Result
+
+Jenkins was configured to retrieve a Jenkinsfile from a remote GitHub repository and execute a Continuous Integration pipeline. Automatic repository polling was configured to check for changes every 5 minutes.
+
+### 6\. Viva Questions
+
+* What is Jenkins? An automation server used to automate software development tasks.
+
+* What is CI? Continuous Integration is the regular integration and validation of code changes.
+
+* What is a Jenkinsfile? A text file that defines a Jenkins pipeline as code.
+
+* What is Poll SCM? A Jenkins feature that periodically checks the source repository for changes.
+
+* What does `H/5 * * * *` mean? It schedules polling at approximately five-minute intervals.
+
+* What is a pipeline? A sequence of automated stages used to build, test, and integrate software.
+*
+[10/29, 12:54 AM] Tehseen Panjari: Exp3
+[10/29, 1:10 AM] Tehseen Panjari: ### Practical 4: Store Registration Form Data in DynamoDB Using AWS Lambda
+
+### 1\. Aim
+
+To write an AWS Lambda function that stores registration form information in an Amazon DynamoDB table.
+
+### 2\. Theory
+
+AWS Lambda is a serverless computing service that executes code without requiring the user to manage servers. Amazon DynamoDB is a NoSQL database used to store and retrieve data.
+
+When a user submits the registration form, the form sends the entered information to the Lambda function. The function processes the data and stores it as an item in a DynamoDB table using the AWS SDK.
+
+### 3\. Requirements
+
+* AWS account
+
+* AWS Lambda
+
+* Amazon DynamoDB
+
+* Registration form code provided
+
+* Appropriate IAM permissions
+
+### 4\. Procedure / Steps of Performance
+
+* Log in to the [AWS Management Console](https://console.aws.amazon.com/?utm_source=chatgpt.com).
+
+* Open DynamoDB → Tables → Create table.
+
+* Enter the table name `RegistrationTable`.
+
+* Set the partition key to `email` with type String, then create the table.
+
+* Open IAM → Roles and create or select a Lambda execution role with permission to write items to the table. Attach the required DynamoDB write permission, preferably restricted to this table.
+
+* Open AWS Lambda → Create function.
+
+* Select Author from scratch, enter the function name `RegistrationFunction`, choose Python, and select the execution role created earlier.
+
+* Add the following Lambda code and replace the table name if necessary.
+
+* Deploy the function and configure the registration form to send its submitted data to the Lambda function through an appropriate endpoint, such as API Gateway.
+
+* Submit the registration form and verify that the record appears in DynamoDB under Explore table items.
+
+### 5\. Lambda Function Code
+
+```python
+import json
+import boto3
+import os
+
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('RegistrationTable')
+
+def lambda_handler(event, context):
+    try:
+        # Handle form data sent directly or through API Gateway
+        if 'body' in event and event['body']:
+            body = event['body']
+            if isinstance(body, str):
+                data = json.loads(body)
+            else:
+                data = body
+        else:
+            data = event
+
+        item = {
+            'email': data['email'],
+            'name': data['name'],
+            'phone': data['phone']
+        }
+
+        table.put_item(Item=item)
+
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'application/json'
+            },
+            'body': json.dumps({
+                'message': 'Registration successful'
+            })
+        }
+
+    except Exception as e:
+        return {
+            'statusCode': 400,
+            'headers': {
+                'Content-Type': 'application/json'
+            },
+            'body': json.dumps({
+                'message': 'Registration failed',
+                'error': str(e)
+            })
+        }
+```
+
+Note: The example assumes the form sends `name`, `email`, and `phone` as JSON. Modify these field names according to the provided registration form.
+
+### 6\. Test the Function
+
+Use the Lambda Test option with this sample event:
+
+```json
+{
+  "name": "Rahul Patil",
+  "email": "rahul@example.com",
+  "phone": "9876543210"
+}
+```
+
+Expected response:
+
+```json
+{
+  "message": "Registration successful"
+}
+```
+
+Open DynamoDB → `RegistrationTable` → Explore table items and verify that the submitted information has been stored.
+
+### 7\. Result
+
+The AWS Lambda function was implemented to receive registration form data and store the information in an Amazon DynamoDB table.
+
+### 8\. Viva Questions
+
+1\. What is AWS Lambda? A serverless service that executes code in response to events.
+
+2\. What is DynamoDB? A fully managed NoSQL database service provided by AWS.
+
+3\. What is the purpose of `put_item()`? It inserts an item into a DynamoDB table or replaces an existing item with the same primary key.
+
+4\. Why is IAM required? IAM provides permissions that allow Lambda to access DynamoDB securely.
+
+5\. How does the registration form communicate with Lambda? The form sends an HTTP request to an endpoint, commonly provided by API Gateway, which invokes the Lambda function.
+[10/29, 1:10 AM] Tehseen Panjari: Exp 4[10/29, 1:32 AM] Tehseen Panjari: ### Practical 5: Install Ansible and Perform Software Provisioning and Configuration on Localhost
+
+### 1\. Aim
+
+To install Ansible and perform software provisioning and configuration on the localhost machine.
+
+### 2\. Theory
+
+Ansible is an open-source automation tool used for software provisioning, configuration management, and application deployment. It uses YAML files called playbooks to define tasks that should be executed on target machines.
+
+Ansible is agentless, meaning it does not require a separate Ansible agent on managed Linux machines. It commonly connects to remote Linux systems using SSH and can also manage the local machine.
+
+### 3\. Requirements
+
+* Linux environment or Ubuntu on WSL
+
+* Python 3
+
+* Ansible
+
+* Terminal or command prompt
+
+* YAML playbook
+
+### 4\. Procedure / Steps of Performance
+
+### Step 1: Update the package list
+
+Open the Ubuntu terminal and execute:
+
+```bash
+sudo apt update
+```
+
+### Step 2: Install Ansible
+
+```bash
+sudo apt install ansible -y
+```
+
+### Step 3: Verify the installation
+
+```bash
+ansible --version
+```
+
+The installed Ansible version and configuration details should be displayed.
+
+### Step 4: Create a playbook
+
+Create a file named `setup.yml`:
+
+```bash
+nano setup.yml
+```
+
+Write the following YAML code:
+
+```yaml
+---
+- name: Configure localhost
+  hosts: localhost
+  connection: local
+  become: yes
+
+  tasks:
+    - name: Create a directory
+      file:
+        path: /tmp/myapp
+        state: directory
+        mode: '0755'
+
+    - name: Create a configuration file
+      copy:
+        content: "Application configured successfully"
+        dest: /tmp/myapp/config.txt
+        mode: '0644'
+```
+
+Save and exit the editor.
+
+### Step 5: Execute the playbook
+
+```bash
+sudo ansible-playbook -i 'localhost,' setup.yml
+```
+
+Ansible executes the tasks defined in the playbook on the localhost machine.
+
+### Step 6: Verify the result
+
+Check whether the directory was created:
+
+```bash
+ls -l /tmp/myapp
+```
+
+Check the contents of the configuration file:
+
+```bash
+cat /tmp/myapp/config.txt
+```
+
+Expected output:
+
+```text
+Application configured successfully
+```
+
+### 5\. Result
+
+Ansible was installed and used to perform software provisioning and configuration on the localhost machine by creating a directory and a configuration file through a YAML playbook.
+
+### 6\. Viva Questions
+
+1\. What is Ansible?
+
+Ansible is an automation tool used for configuration management, software provisioning, and application deployment.
+
+2\. What is a playbook?
+
+A playbook is a YAML file that defines the tasks Ansible executes on managed machines.
+
+3\. What is localhost?
+
+Localhost refers to the machine on which the commands or tasks are being executed.
+
+4\. What is the purpose of `ansible --version`?
+
+It checks the installed Ansible version and displays configuration information.
+
+5\. What is the purpose of `become: yes`?
+
+It allows Ansible tasks to execute with elevated privileges when authorized.
+
+6\. What does the `file` module do?
+
+The `file` module manages files, directories, permissions, and related file attributes.
+
+7\. What does the `copy` module do?
+
+The `copy` module copies content or files to a specified destination.
+
+### Important troubleshooting notes for your practical
+
+* If `apt` cannot find the package, run `sudo apt update` and retry the installation.
+
+* If `wsl.exe` fails in PowerShell, check whether WSL is enabled and whether the college computer permits Linux installation.
+
+* Use `sudo apt` inside Ubuntu/Linux, not directly as a PowerShell command.
+
+* If Ansible is already installed, verify it using `ansible --version`.
+
+* Remember the execution command:
+
+```bash
+sudo ansible-playbook -i 'localhost,' setup.yml
+```
+
+The comma in `'localhost,'` tells Ansible to treat `localhost` as an inventory entry.
+[10/29, 1:32 AM] Tehseen Panjari: Exp 5
+[10/29, 1:54 AM] Tehseen Panjari: ### Practical 6: Install Docker and Deploy a Two-Page E-commerce Website
+
+These are the corrected practical-journal steps for Windows PowerShell, based on the method you used on your laptop. They are suitable for your college PC too, provided Docker Desktop is installed and running.
+
+### 1\. Aim
+
+To install Docker and deploy an E-commerce web application consisting of at least two web pages using a Docker container.
+
+### 2\. Theory
+
+Docker is a platform used to package and run applications inside lightweight, isolated environments called containers. A Docker image contains the application files and the required environment to run the application.
+
+A `Dockerfile` contains instructions to build a Docker image. Docker can run a web server such as Nginx inside a container to serve an E-commerce website.
+
+### 3\. Software Required
+
+* Windows 10/11
+
+* Docker Desktop
+
+* PowerShell
+
+* HTML and CSS
+
+* Nginx web server
+
+### 4\. Procedure / Steps of Performance
+
+### Step 1: Install and start Docker Desktop
+
+* Download Docker Desktop from the official website: [Docker Desktop](https://www.docker.com/products/docker-desktop/?utm_source=chatgpt.com).
+
+* Install it according to the system requirements.
+
+* Start Docker Desktop and wait until the Docker engine is running.
+
+* Open PowerShell and verify the installation:
+
+```powershell
+docker --version
+docker info
+```
+
+If Docker is already installed on the college PC, proceed directly to the next step.
+
+### Step 2: Create the project directory
+
+```powershell
+mkdir docker-ecommerce
+cd docker-ecommerce
+mkdir site
+```
+
+### Step 3: Create the first web page
+
+Create `index.html`:
+
+```powershell
+@'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ShopEasy - Home</title>
+</head>
+<body>
+    <h1>Welcome to ShopEasy</h1>
+    <p>Your online shopping destination.</p>
+    <a href="products.html">View Products</a>
+</body>
+</html>
+'@ | Set-Content -Encoding utf8 site\index.html
+```
+
+### Step 4: Create the second web page
+
+Create `products.html`:
+
+```powershell
+@'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ShopEasy - Products</title>
+</head>
+<body>
+    <h1>Our Products</h1>
+    <p>Mobile Phone - Rs. 15000</p>
+    <p>Headphones - Rs. 2000</p>
+    <p>Laptop - Rs. 45000</p>
+    <a href="index.html">Back to Home</a>
+</body>
+</html>
+'@ | Set-Content -Encoding utf8 site\products.html
+```
+
+### Step 5: Create the Dockerfile
+
+Run this command in PowerShell:
+
+```powershell
+@'
+FROM nginx:alpine
+COPY site/ /usr/share/nginx/html/
+EXPOSE 80
+'@ | Set-Content -Encoding ascii Dockerfile
+```
+
+The Dockerfile uses the Nginx image, copies both HTML pages into the web server's document directory, and specifies port 80.
+
+### Step 6: Build the Docker image
+
+Ensure that PowerShell is in the `docker-ecommerce` directory.
+
+```powershell
+docker build -t shopeasy:latest .
+```
+
+Verify the image:
+
+```powershell
+docker images
+```
+
+### Step 7: Run the container
+
+Since port 8080 was already occupied on your laptop, use port 8081 for this practical.
+
+```powershell
+docker run -d --name shopeasy-container -p 8081:80 shopeasy:latest
+```
+
+Here, port 8081 on the Windows host is mapped to port 80 inside the container.
+
+### Step 8: Verify the deployment
+
+Check the running container:
+
+```powershell
+docker ps
+```
+
+Open these addresses in your browser:
+
+Home page
+
+[http://localhost:8081](http://localhost:8081?utm_source=chatgpt.com)
+
+Open
+
+Products page
+
+[http://localhost:8081/products.html](http://localhost:8081/products.html?utm_source=chatgpt.com)
+
+Open
+
+Verify that both pages load and that the links allow navigation between them.
+
+### Step 9: Stop the container (if required)
+
+```powershell
+docker stop shopeasy-container
+```
+
+To start it again:
+
+```powershell
+docker start shopeasy-container
+```
+
+### 5\. Result
+
+Docker was installed and used to build an image for the ShopEasy E-commerce website. The image was deployed as a running container using Nginx, and the two web pages were accessed through the browser.
+
+### 6\. Viva Questions
+
+1\. What is Docker?
+
+Docker is a platform used to build, package, and run applications inside containers.
+
+2\. What is a Docker image?
+
+A Docker image is a template used to create containers.
+
+3\. What is a Docker container?
+
+A container is an isolated running instance of a Docker image.
+
+4\. What is a Dockerfile?
+
+A Dockerfile contains instructions for building a Docker image.
+
+5\. What is the purpose of Nginx?
+
+Nginx is a web server that serves the HTML pages to the browser.
+
+6\. What does `-p 8081:80` mean?
+
+It maps port 8081 on the host machine to port 80 inside the container.
+
+7\. What is the purpose of `docker build`?
+
+It builds a Docker image using the instructions in the Dockerfile.
+
+8\. What is the purpose of `docker ps`?
+
+It lists currently running containers.
+
+### Important checks for tomorrow's college PC
+
+* Run `docker info` first to confirm the Docker engine is available.
+
+* Use a fresh directory named `docker-ecommerce` to avoid overwriting an existing project.
+
+* If port 8081 is occupied, choose another available host port, such as 8082, and update the browser URLs accordingly.
+
+* If Docker Desktop requires administrator permission or WSL setup, ask the lab administrator rather than changing restricted system settings.
+
+* Run the PowerShell commands one at a time and wait for each command to finish before proceeding.
+*
+[10/29, 1:54 AM] Tehseen Panjari: Exp 6[10/29, 2:03 AM] Tehseen Panjari: ### Practical 7: Install Terraform and Provision an EC2 Instance on AWS
+
+This is the corrected Windows PowerShell procedure for your college practical. It avoids the Terraform PATH problem and the earlier EC2 AMI compatibility issue by using the Mumbai region and automatically looking up a suitable Ubuntu AMI.
+
+### 1\. Aim
+
+To install Terraform and provision an Amazon EC2 instance using Terraform Infrastructure as Code (IaC).
+
+### 2\. Theory
+
+Terraform is an open-source Infrastructure as Code (IaC) tool developed by HashiCorp. It allows users to define, provision, and manage cloud infrastructure using configuration files written in HashiCorp Configuration Language (HCL).
+
+Amazon EC2 (Elastic Compute Cloud) is an AWS service that provides virtual servers in the cloud. Terraform uses the AWS provider to create and manage AWS resources such as EC2 instances.
+
+### 3\. Requirements
+
+* Windows PC and PowerShell
+
+* Terraform
+
+* AWS account
+
+* AWS IAM credentials with the necessary EC2 permissions
+
+* Internet connection
+
+### 4\. Procedure / Steps of Performance
+
+### Step 1: Install Terraform
+
+* Open the official website: [Terraform Downloads](https://developer.hashicorp.com/terraform/install?utm_source=chatgpt.com).
+
+* Download the Windows AMD64 ZIP package.
+
+* Extract `terraform.exe` to `C:\Terraform`.
+
+* Add `C:\Terraform` to the Windows PATH environment variable if it is not already present.
+
+* Close and reopen PowerShell.
+
+Verify the installation:
+
+```powershell
+terraform -version
+```
+
+If Terraform is not recognized, check the executable directly:
+
+```powershell
+Test-Path "C:\Terraform\terraform.exe"
+```
+
+If the output is `True`, run Terraform using its full path or correct the PATH setting.
+
+### Step 2: Configure AWS credentials
+
+Use an AWS IAM identity with permission to create and manage EC2 resources. Configure credentials using an approved method, such as AWS CLI:
+
+```powershell
+aws configure
+```
+
+Enter your AWS access key, secret key, default region `ap-south-1`, and output format `json` when prompted.
+
+Verify the credentials:
+
+```powershell
+aws sts get-caller-identity
+```
+
+This should display your AWS account and identity information. Never share your secret access key or commit it to GitHub.
+
+### Step 3: Create the Terraform project
+
+```powershell
+mkdir terraform-ec2
+cd terraform-ec2
+```
+
+Keep your Terraform project separate from the folder containing `terraform.exe`.
+
+### Step 4: Create the Terraform configuration file
+
+Create a file named `main.tf` in the project directory:
+
+```powershell
+notepad main.tf
+```
+
+Paste the following configuration and save the file.
+
+```hcl
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  owners      = ["099720109477"]
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
+resource "aws_instance" "web" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "Terraform-EC2"
+  }
+}
+
+output "instance_public_ip" {
+  value = aws_instance.web.public_ip
+}
+```
+
+This configuration selects a suitable Ubuntu 22.04 AMI in Mumbai, creates a `t3.micro` EC2 instance, and displays its public IP address.
+
+### Step 5: Initialize Terraform
+
+```powershell
+terraform init
+```
+
+This downloads the AWS provider and initializes the Terraform working directory.
+
+### Step 6: Validate the configuration
+
+```powershell
+terraform validate
+```
+
+Expected result:
+
+```text
+Success! The configuration is valid.
+```
+
+### Step 7: Preview the infrastructure
+
+```powershell
+terraform plan
+```
+
+Review the planned changes before creating resources.
+
+### Step 8: Provision the EC2 instance
+
+```powershell
+terraform apply
+```
+
+Type `yes` when Terraform asks for confirmation.
+
+Terraform will create the EC2 instance in the AWS Mumbai region. Wait for the operation to finish successfully.
+
+### Step 9: Verify the instance
+
+Terraform should display an output similar to:
+
+```text
+instance_public_ip = "your-public-ip"
+```
+
+You can also verify the instance in the AWS Console:
+
+* Open AWS Console.
+
+* Search for EC2.
+
+* Select Instances.
+
+* Confirm that the `Terraform-EC2` instance is running.
+
+### 5\. Result
+
+Terraform was installed and configured successfully. An Ubuntu EC2 instance was provisioned in the AWS Mumbai region using Terraform configuration files.
+
+### 6\. Viva Questions
+
+1\. What is Terraform?
+
+Terraform is an Infrastructure as Code tool used to create and manage infrastructure using configuration files.
+
+2\. What is AWS EC2?
+
+Amazon EC2 is a cloud service that provides virtual servers.
+
+3\. What is a provider in Terraform?
+
+A provider is a plugin that allows Terraform to interact with a cloud platform or other service.
+
+4\. What is `terraform init`?
+
+It initializes the working directory and downloads the required providers.
+
+5\. What is `terraform plan`?
+
+It previews the infrastructure changes Terraform intends to make.
+
+6\. What is `terraform apply`?
+
+It applies the configuration and creates or modifies the specified resources.
+
+7\. What is a Terraform state file?
+
+The state file records information about infrastructure managed by Terraform, helping it track resources.
+
+### Important: Avoid unnecessary AWS charges
+
+An EC2 instance can incur charges depending on your account, region, and usage. After your practical, if you no longer need the instance, run the following from the same project directory:
+
+```powershell
+terraform destroy
+```
+
+Review the proposed deletions and type `yes` to confirm. This removes resources managed by this configuration. Do not delete resources you need to keep.
+
+Remember the command sequence: `init → validate → plan → apply → verify → destroy (when finished)`.
+[10/29, 2:03 AM] Tehseen Panjari: Exp 7
+[10/29, 2:12 AM] Tehseen Panjari: This practical is correct. For your DevOps journal, write it in this simpler, exam-ready format. These steps also match the AWS Console workflow you can follow on the college PC. ✅
+
+### Practical 8: Store Date and Time in DynamoDB Using AWS Lambda
+
+Aim: To write an AWS Lambda function that stores the current date and time in an Amazon DynamoDB table whenever the function executes.
+
+Theory: AWS Lambda is a serverless computing service that executes code without requiring server management. Amazon DynamoDB is a NoSQL database used to store data. In this practical, a Python Lambda function obtains the current date and time and stores them in DynamoDB using the `put_item()` method.
+
+Requirements: AWS account, AWS Lambda, Amazon DynamoDB, and an IAM execution role with permission to write to the table.
+
+### Procedure
+
+Step 1: Create a DynamoDB table
+
+* Open the [AWS DynamoDB Console](https://console.aws.amazon.com/dynamodb/?utm_source=chatgpt.com).
+
+* Select Tables → Create table.
+
+* Enter the table name as `ExecutionLog`.
+
+* Set the partition key to `id` and select type String.
+
+* Keep the default settings and click Create table.
+
+* Wait until the table status becomes Active.
+
+Step 2: Create the Lambda function
+
+* Open the [AWS Lambda Console](https://console.aws.amazon.com/lambda/?utm_source=chatgpt.com).
+
+* Click Create function → Author from scratch.
+
+* Enter the function name `StoreDateTime`.
+
+* Select Python 3.12 or another available Python 3 runtime.
+
+* Click Create function.
+
+Step 3: Give permission to Lambda
+
+* Open `StoreDateTime` and select Configuration → Permissions.
+
+* Click the execution role name to open it in IAM.
+
+* Choose Add permissions → Create inline policy and select the JSON editor.
+
+* Add the following policy, replacing `YOUR_ACCOUNT_ID` with your AWS account ID. Keep `ap-south-1` only if your table is in the Mumbai region.
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "dynamodb:PutItem",
+      "Resource": "arn:aws:dynamodb:ap-south-1:YOUR_ACCOUNT_ID:table/ExecutionLog"
+    }
+  ]
+}
+```
+
+5\. Name the policy `LambdaWriteExecutionLog` and create it.
+
+Step 4: Write the Lambda code
+
+Open the Code tab, replace the contents of `lambda_function.py` with the following code, and click Deploy.
+
+```python
+import json
+import boto3
+import uuid
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+dynamodb = boto3.resource("dynamodb", region_name="ap-south-1")
+table = dynamodb.Table("ExecutionLog")
+
+def lambda_handler(event, context):
+    now = datetime.now(ZoneInfo("Asia/Kolkata"))
+
+    item = {
+        "id": str(uuid.uuid4()),
+        "date": now.strftime("%Y-%m-%d"),
+        "time": now.strftime("%H:%M:%S"),
+        "timestamp": now.isoformat()
+    }
+
+    table.put_item(Item=item)
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps({
+            "message": "Date and time stored successfully",
+            "data": item
+        })
+    }
+```
+
+Make sure the Lambda function and DynamoDB table are both in `ap-south-1` (Mumbai), or change the region in the code and IAM policy to match your table.
+
+Step 5: Test the function
+
+* Click Test in the Lambda console.
+
+* Create a test event named `DateTimeTest`.
+
+* Enter this JSON as the event:
+
+```json
+{}
+```
+
+* Save the event and click Test to execute the function.
+
+* The result should contain a success message and the stored date and time.
+
+Step 6: Verify the stored data
+
+* Return to DynamoDB.
+
+* Open Tables → ExecutionLog → Explore table items.
+
+* Check that the item contains `id`, `date`, `time`, and `timestamp`.
+
+* Run the Lambda function twice and verify that two separate records are stored.
+
+### Result
+
+The AWS Lambda function was successfully created using Python and connected to Amazon DynamoDB. Each execution stores the current date and time in Indian Standard Time (IST) as a new database record.
+
+### Viva questions
+
+1\. What is AWS Lambda? AWS Lambda is a serverless service that executes code in response to events without requiring server management.
+
+2\. What is Amazon DynamoDB? DynamoDB is a fully managed NoSQL database service provided by AWS.
+
+3\. What is `boto3`? `boto3` is the AWS SDK for Python, used to access AWS services from Python programs.
+
+4\. What is `put_item()`? It is a DynamoDB operation used to insert or replace an item in a table.
+
+5\. Why is a unique ID generated? A unique ID identifies each execution record and prevents different executions from using the same partition key.
+
+6\. What is an IAM execution role? It grants a Lambda function permission to access AWS resources, such as writing records to DynamoDB.
+
+7\. Why do we use `datetime`? It obtains the current date and time for storage in the database.
+
+8\. What happens when Lambda executes twice? Two separate records are stored because each execution generates a new unique ID.
+
+Important for the practical: If you receive an `AccessDeniedException`, check the IAM permission. If you receive a resource-not-found error, check the table name and AWS region.
+[10/29, 2:12 AM] Tehseen Panjari: Exp 8[10/29, 2:16 AM] Tehseen Panjari: For Practical 9, you need to install Apache Airflow, create a DAG that displays the current date and time, and schedule it to run every Wednesday at 9:30 AM. Since you encountered errors while setting up Airflow on your laptop, these steps include the important corrections. ✅
+
+### Practical 9: Install Apache Airflow and Create a Scheduled DAG
+
+Aim: To install Apache Airflow and create a Directed Acyclic Graph (DAG) that displays the current date and time every Wednesday at 9:30 AM.
+
+Theory: Apache Airflow is an open-source workflow automation and scheduling platform. A DAG defines tasks and their execution order. The scheduler determines when tasks should run, while the webserver provides the user interface to monitor and manage DAGs.
+
+### Procedure
+
+### Step 1: Open Ubuntu / WSL
+
+Airflow is best installed in a Linux environment. If Ubuntu is already installed through WSL, open Ubuntu from the Start menu.
+
+If it is not installed, check in PowerShell:
+
+```powershell
+wsl --status
+wsl --list --verbose
+```
+
+If Ubuntu is available, open it. Do not install or change Windows features on a college PC without permission.
+
+### Step 2: Install Python tools
+
+Run these commands inside the Ubuntu terminal, not PowerShell:
+
+```bash
+sudo apt update
+sudo apt install python3 python3-pip python3-venv -y
+```
+
+Create a project directory and virtual environment:
+
+```bash
+mkdir -p ~/airflow-practical
+cd ~/airflow-practical
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Confirm the environment is active:
+
+```bash
+python --version
+```
+
+The terminal prompt should show `(.venv)`.
+
+### Step 3: Install Apache Airflow
+
+First, set the Airflow version and use its official constraints file so that compatible Python packages are installed together.
+
+```bash
+export AIRFLOW_VERSION=2.10.5
+export PYTHON_VERSION="$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')"
+export AIRFLOW_HOME="$HOME/airflow"
+```
+
+Install Airflow using the matching constraints file:
+
+```bash
+pip install "apache-airflow==${AIRFLOW_VERSION}" \
+  --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
+```
+
+This can take several minutes. Airflow 2.10.5 supports Python 3.8–3.12; if your Python version is outside that range, use a compatible Python installation rather than repeatedly retrying the same command.
+
+Verify installation:
+
+```bash
+airflow version
+```
+
+Expected output:
+
+```text
+2.10.5
+```
+
+### Step 4: Create the DAG file
+
+Create the DAG folder and open a file in the terminal:
+
+```bash
+mkdir -p "$AIRFLOW_HOME/dags"
+nano "$AIRFLOW_HOME/dags/datetime_dag.py"
+```
+
+Paste this code:
+
+```python
+from datetime import datetime
+import pendulum
+
+from airflow import DAG
+from airflow.operators.python import PythonOperator
+
+def display_datetime():
+    current_time = pendulum.now("Asia/Kolkata")
+    print("Current Date:", current_time.strftime("%Y-%m-%d"))
+    print("Current Time:", current_time.strftime("%H:%M:%S"))
+
+with DAG(
+    dag_id="datetime_dag",
+    start_date=pendulum.datetime(2026, 10, 1, tz="Asia/Kolkata"),
+    schedule="30 9 * * 3",
+    catchup=False,
+    tags=["practical"],
+) as dag:
+
+    show_datetime = PythonOperator(
+        task_id="display_date_time",
+        python_callable=display_datetime,
+    )
+```
+
+Save the file in Nano: press Ctrl+O, Enter, then Ctrl+X.
+
+The schedule `30 9 * * 3` means every Wednesday at 9:30 AM, using the DAG's timezone, Asia/Kolkata. The task prints the date and time when it actually executes.
+
+### Step 5: Initialize Airflow
+
+Run:
+
+```bash
+airflow db migrate
+```
+
+Create a login user for the web interface:
+
+```bash
+airflow users create \
+  --username admin \
+  --firstname Admin \
+  --lastname User \
+  --role Admin \
+  --email admin@example.com \
+  --password Admin12345
+```
+
+If the user already exists, do not create it again.
+
+### Step 6: Start the webserver and scheduler
+
+Open two separate Ubuntu terminals. Activate the virtual environment in each terminal:
+
+```bash
+cd ~/airflow-practical
+source .venv/bin/activate
+export AIRFLOW_HOME="$HOME/airflow"
+```
+
+In Terminal 1, start the webserver:
+
+```bash
+airflow webserver --port 8080
+```
+
+In Terminal 2, start the scheduler:
+
+```bash
+cd ~/airflow-practical
+source .venv/bin/activate
+export AIRFLOW_HOME="$HOME/airflow"
+airflow scheduler
+```
+
+Keep both terminals running. Open this address in your browser:
+
+[http://localhost:8080](http://localhost:8080?utm_source=chatgpt.com)
+
+Log in with the account created in Step 5.
+
+### Step 7: Test the DAG
+
+* Find `datetime_dag` in the Airflow interface.
+
+* Enable the DAG if it is paused.
+
+* Open the DAG's Grid view.
+
+* Use Trigger DAG to test it immediately.
+
+* Click the `display_date_time` task and inspect its logs.
+
+You should see output similar to:
+
+```text
+Current Date: 2026-10-29
+Current Time: 09:30:00
+```
+
+The displayed values depend on the actual execution time; they will not necessarily be 9:30 AM when manually triggered.
+
+Important: A manual trigger tests the task, not the Wednesday schedule. To demonstrate scheduling, keep the scheduler running and verify that the next scheduled run occurs on Wednesday at 9:30 AM IST.
+
+### Result
+
+Apache Airflow was installed, and a DAG was created to display the current date and time every Wednesday at 9:30 AM.
+
+### Viva questions
+
+1\. What is Apache Airflow? Apache Airflow is a platform used to schedule, manage, and monitor workflows.
+
+2\. What is a DAG? DAG stands for Directed Acyclic Graph. It represents tasks and their dependencies without cycles.
+
+3\. What is a cron expression? A cron expression specifies when a scheduled task should run.
+
+4\. What does `30 9 * * 3` mean? It means every Wednesday at 9:30 AM.
+
+5\. What is the difference between the webserver and scheduler? The webserver provides the user interface, while the scheduler determines when scheduled tasks should run.
+
+6\. Why do we use a virtual environment? It isolates the project's Python packages from the system Python installation and other projects.
+
+7\. How do you check task execution? Open the DAG's Grid view and inspect the task instance's logs.
+
+8\. Does clicking Trigger DAG prove the schedule works? No. It proves the DAG can be triggered. The scheduler must independently execute the DAG according to its schedule.
+
+### Final checklist for tomorrow
+
+### Practical readiness
+
+0 of 7
+
+Ubuntu/WSL opens successfully
+
+Python virtual environment activates
+
+airflow version runs successfully
+
+DAG file is saved in the dags folder
+
+Airflow database initializes successfully
+
+Webserver and scheduler both run
+
+DAG task logs display date and time
+[10/29, 2:16 AM] Tehseen Panjari: Exp 9
+[10/29, 9:07 AM] Tehseen Panjari: ### Practical: Jenkins Pipeline Using a Remote GitHub Jenkinsfile and Docker Deployment
+
+Aim: To install and configure Jenkins, create a pipeline using a `Jenkinsfile` stored in a remote GitHub repository, and deploy a web application using Docker as one of the pipeline stages.
+
+Theory: Jenkins is an automation server used for Continuous Integration and Continuous Delivery (CI/CD). A `Jenkinsfile` defines the pipeline stages. GitHub stores the source code and Jenkinsfile, while Docker packages the web application into an image and runs it inside a container. Jenkins can periodically check the GitHub repository for changes using Poll SCM.
+
+### 1\. Requirements
+
+* Windows PC with administrator permission, if installation requires it.
+
+* Java version supported by the selected Jenkins release.
+
+* Jenkins, Git, Docker Desktop and an internet connection.
+
+* A GitHub repository containing the web application and `Jenkinsfile`.
+
+### 2\. Install and verify the software
+
+Install Jenkins from the official [Jenkins website](https://www.jenkins.io/download/?utm_source=chatgpt.com) and Docker Desktop from [Docker's website](https://www.docker.com/products/docker-desktop/?utm_source=chatgpt.com). Install Git from [git-scm.com](https://git-scm.com/install/windows?utm_source=chatgpt.com).
+
+Open PowerShell and check:
+
+```powershell
+java -version
+git --version
+docker --version
+docker info
+```
+
+Start Docker Desktop and wait until its engine is running. If `docker info` fails, resolve that issue before running the pipeline.
+
+Start Jenkins if it is installed as a Windows service:
+
+```powershell
+Get-Service Jenkins
+```
+
+If it is stopped, open PowerShell as administrator and run:
+
+```powershell
+Start-Service Jenkins
+```
+
+Open Jenkins at `http://localhost:8080` if that is the configured port. Complete the initial setup and log in.
+
+### 3\. Create the GitHub repository
+
+Create a GitHub repository named `jenkins-docker-practical`. Add these three files to its root directory.
+
+File 1: `index.html`
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ShopEasy</title>
+</head>
+<body>
+    <h1>Welcome to ShopEasy</h1>
+    <p>Deployed using Jenkins and Docker.</p>
+</body>
+</html>
+```
+
+File 2: `Dockerfile`
+
+```dockerfile
+FROM nginx:alpine
+COPY index.html /usr/share/nginx/html/index.html
+EXPOSE 80
+```
+
+File 3: `Jenkinsfile`
+
+```groovy
+pipeline {
+    agent any
+
+    triggers {
+        pollSCM('H/5 * * * *')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t shopeasy:latest .'
+            }
+        }
+
+        stage('Deploy Web Application') {
+            steps {
+                bat '''
+                    docker rm -f shopeasy-container 2>NUL
+                    docker run -d --name shopeasy-container -p 8081:80 shopeasy:latest
+                '''
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                bat 'docker ps'
+                bat 'curl.exe -f http://localhost:8081'
+            }
+        }
+    }
+}
+```
+
+Commit and push all three files to the repository's `main` branch.
+
+The pipeline uses port 8081 because port 8080 is commonly used by Jenkins itself. If port 8081 is already occupied, select another available host port and change the URL in the verification stage accordingly.
+
+### 4\. Create the Jenkins pipeline job
+
+* Open Jenkins.
+
+* Select New Item.
+
+* Enter the job name `github-docker-pipeline`.
+
+* Select Pipeline and click OK.
+
+* Scroll to the Build Triggers section and enable Poll SCM.
+
+* Enter this schedule:
+
+```text
+H/5 * * * *
+```
+
+This checks the repository approximately every five minutes. Jenkins builds when it detects relevant changes; it does not necessarily run a build every five minutes if nothing changes.
+
+### 5\. Configure the remote Jenkinsfile
+
+Under the job's Pipeline section, select:
+
+* Definition: Pipeline script from SCM
+
+* SCM: Git
+
+* Repository URL: `https://github.com/YOUR-USERNAME/jenkins-docker-practical.git`
+
+* Credentials: None for a public repository; use valid GitHub credentials for a private repository.
+
+* Branch Specifier: `*/main`
+
+* Script Path: `Jenkinsfile`
+
+Replace `YOUR-USERNAME` with your actual GitHub username. Click Save.
+
+The Jenkinsfile must be present at the specified path in the selected branch.
+
+### 6\. Run the pipeline
+
+* Open `github-docker-pipeline`.
+
+* Click Build Now.
+
+* Open the latest build and select Console Output.
+
+* Confirm that the stages complete successfully:
+
+    * Checkout
+
+    * Build Docker Image
+
+    * Deploy Web Application
+
+    * Verify Deployment
+
+If Jenkins reports a Docker connection error, check that Docker Desktop is running and that the Windows account running the Jenkins service has permission to access Docker. Merely running Docker successfully in your own PowerShell session does not guarantee that the Jenkins service can access it.
+
+### 7\. Verify the deployed application
+
+Open PowerShell and run:
+
+```powershell
+docker images
+docker ps
+curl.exe http://localhost:8081
+```
+
+You should see the `shopeasy` image, a running container named `shopeasy-container`, and the HTML response from the web application.
+
+Open the browser:
+
+[http://localhost:8081](http://localhost:8081?utm_source=chatgpt.com)
+
+You should see Welcome to ShopEasy.
+
+### 8\. Test automatic polling
+
+* Open `index.html` on GitHub.
+
+* Change the heading and commit the change to `main`.
+
+* Wait for Jenkins to detect the change.
+
+* Open Build History → Console Output and confirm that the pipeline runs again.
+
+* Refresh the application at `http://localhost:8081` to verify the updated content.
+
+A manual Build Now confirms that the pipeline can run. A new build triggered after a GitHub commit confirms that polling works.
+
+### Result
+
+A Jenkins pipeline was configured to retrieve a Jenkinsfile from a remote GitHub repository, build a Docker image, deploy the web application in a Docker container, and verify the deployment. Poll SCM was configured to check for repository changes approximately every five minutes.
+
+### Viva questions
+
+1\. What is Jenkins? Jenkins is an automation server used to implement CI/CD pipelines.
+
+2\. What is a Jenkinsfile? A Jenkinsfile is a text file that defines pipeline stages and steps, usually written in Declarative or Scripted Pipeline syntax.
+
+3\. What is Pipeline script from SCM? It allows Jenkins to retrieve the Jenkinsfile from a source control repository such as GitHub.
+
+4\. What is Poll SCM? Poll SCM periodically checks the repository for changes and triggers a build when changes are detected.
+
+5\. What is Docker? Docker is a platform for packaging and running applications in containers.
+
+6\. What is the difference between an image and a container? An image is the packaged application template; a container is a running instance of that image.
+
+7\. Why is port mapping used? The mapping `-p 8081:80` forwards requests from host port 8081 to port 80 inside the container.
+
+8\. What does `docker build` do? It builds a Docker image using the instructions in the Dockerfile.
+
+9\. What does `docker run` do? It creates and starts a container from an image.
+
+10\. Why use a remote Jenkinsfile? It keeps pipeline instructions in version control, allowing them to be reviewed, tracked, and updated alongside the application.
+
+Important: This pipeline replaces the existing container named `shopeasy-container` whenever deployment runs. Use that name only for this practical, not for an unrelated container. On a college PC, confirm Docker Desktop and the Jenkins service can both run before beginning the assessment.
+[10/29, 9:07 AM] Tehseen Panjari: Exp 10
