@@ -1,0 +1,432 @@
+I'll give you the complete AWS Lambda + DynamoDB practical from start to end, using the AWS Management Console. The steps are designed for your DevOps practical exam, so you can follow them on the college PC without installing Python, AWS CLI, or any extra software.
+
+One important thing: no one can guarantee success on every college PC because AWS account permissions, internet access, and lab restrictions can vary. However, following this sequence and testing each stage will help you identify and fix problems before the final demonstration. ✅
+
+### Practical 4: Store Registration Form Data in DynamoDB Using AWS Lambda
+
+### How the practical works
+
+Registration Form
+
+Name, email, phone, etc.
+
+AWS Lambda Function
+
+Receives form data and processes it
+
+Amazon DynamoDB
+
+Stores each registration as an item
+
+The registration form's HTML code is provided in your practical. You will connect that form to Lambda, and Lambda will save the submitted information in a DynamoDB table.
+
+### Step 1: Open AWS Console
+
+* Open Chrome or Edge on the college PC.
+
+* Visit [AWS Management Console](https://console.aws.amazon.com/?utm_source=chatgpt.com).
+
+* Sign in using the AWS lab credentials provided by your college.
+
+* Select the AWS Region specified by your teacher. If no region is specified, use the same region throughout the practical, for example, Asia Pacific (Mumbai) — `ap-south-1`.
+
+* Keep the same region selected for Lambda and DynamoDB.
+
+Important: If you are using AWS Academy or a college sandbox, start the lab session first. Some lab accounts restrict IAM permissions or certain services.
+
+### Step 2: Create a DynamoDB table
+
+![Step 1: Create a table in DynamoDB - Amazon DynamoDB](https://images.openai.com/static-rsc-4/Qy1s3r_Jcjk38-0DyYQiKKkqeLaMEj7Xy4vgdG5MmEL197It7zz5dmupaMCKGlpF4CkPZTiEQn5u99cklTfwlT87lh-7dUy34Q1jGnUZgTwM612VsquOzRRNJJBCMywK9uaxV_WP4FpxXWShN1QEpRNzDTqgBwzem7ex1rImT1Sqp24ljueYBVTEzwPS_LRI?purpose=fullsize)
+
+* Search for DynamoDB in the AWS Console search bar.
+
+* Open Amazon DynamoDB.
+
+* Click Tables → Create table.
+
+* Enter the following details.
+
+Table name
+
+### Registrations
+
+Copy
+
+Partition key name
+
+### registrationId
+
+Type: String
+
+Copy
+
+* Leave the partition key type as String.
+
+* Keep the default settings, including the default capacity mode, unless the college lab instructs otherwise.
+
+* Click Create table.
+
+* Wait until the table status changes to Active.
+
+Why do we use `registrationId`? DynamoDB needs a primary key to uniquely identify each registration. Our Lambda function will generate a unique ID for every submission.
+
+Do not create a sort key for this practical.
+
+### Step 3: Create the Lambda function
+
+![Streamlined multi-tenant application development with tenant isolation mode in AWS Lambda - Deven Goratela](https://images.openai.com/static-rsc-4/SA6JT5K2IGYNFh2RcQ0X1rJG8HQQA4Ijz8pb49lwejaD4w7x6311BrplklWpcN-09LKKVS8_8tNq773bfTaNK8-dld-eGg9Kfg61WiBK3nb80ui1WcVSSri33TcDCilVXaQKxWStm5WmRsG1x4o-vIa3EwZbi0uHiNuPit1Ev2xe3nwF3ebDWOg_BAE5a3UU?purpose=fullsize)
+
+* Search for Lambda in the AWS Console.
+
+* Click Create function.
+
+* Select Author from scratch.
+
+* Enter the following:
+
+| Setting       | Value                                                        |
+| ------------- | ------------------------------------------------------------ |
+| Function name | RegistrationFunction                                         |
+| Runtime       | Python 3.12, or another available supported Python 3 runtime |
+| Architecture  | Default                                                      |
+| Permissions   | Create a new role with basic Lambda permissions              |
+
+* Click Create function.
+
+* Wait until the function is created.
+
+The execution role gives Lambda permission to write logs. We will add DynamoDB access next.
+
+### Step 4: Give Lambda permission to write to DynamoDB
+
+This is one of the most important steps. Without this permission, the function may run but fail when it tries to save the registration.
+
+* Open your `RegistrationFunction`.
+
+* Select Configuration → Permissions.
+
+* Under Execution role, click the role name. This opens the IAM console.
+
+* Click Add permissions → Attach policies or use the role's inline policy option if managed policies are restricted.
+
+* For a straightforward lab setup, search for and attach:
+
+`AmazonDynamoDBFullAccess`
+
+6\. Confirm the change.
+
+Security note: Full access is acceptable only as a quick classroom demonstration if the lab permits it. In a real application, grant only `dynamodb:PutItem` on the specific `Registrations` table.
+
+If your lab does not allow attaching this policy, ask the instructor for the required IAM permission; do not keep changing unrelated settings.
+
+### Step 5: Add the DynamoDB table name to Lambda
+
+We will use an environment variable so the code knows which table to write to.
+
+* Return to the Lambda function.
+
+* Open Configuration → Environment variables.
+
+* Click Edit → Add environment variable.
+
+* Enter:
+
+| Field | Value         |
+| ----- | ------------- |
+| Key   | TABLE_NAME    |
+| Value | Registrations |
+
+5\. Click Save.
+
+The table and Lambda must be in the same AWS Region.
+
+### Step 6: Enter the Lambda code
+
+Open the Code tab. In the editor, open `lambda_function.py`.
+
+Select the existing code and replace it with this complete function:
+
+```python
+
+import json
+import os
+import uuid
+import boto3
+from datetime import datetime, timezone
+
+dynamodb = boto3.resource("dynamodb")
+table = dynamodb.Table(os.environ["TABLE_NAME"])
+
+def lambda_handler(event, context):
+    try:
+        # Read submitted form data
+        if "body" in event and event["body"] is not None:
+            body = event["body"]
+
+            if isinstance(body, str):
+                data = json.loads(body)
+            else:
+                data = body
+        else:
+            # Also supports direct Lambda test events
+            data = event
+
+        # Create a unique ID for each registration
+        registration_id = str(uuid.uuid4())
+
+        # Store registration details
+        item = {
+            "registrationId": registration_id,
+            "name": str(data.get("name", "")),
+            "email": str(data.get("email", "")),
+            "phone": str(data.get("phone", "")),
+            "createdAt": datetime.now(timezone.utc).isoformat()
+        }
+
+        # Save the item to DynamoDB
+        table.put_item(Item=item)
+
+        return {
+            "statusCode": 200,
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Methods": "OPTIONS,POST"
+            },
+            "body": json.dumps({
+                "message": "Registration saved successfully",
+                "registrationId": registration_id
+            })
+        }
+
+    except Exception as e:
+        print("Registration error:", str(e))
+
+        return {
+            "statusCode": 500,
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Allow-Methods": "OPTIONS,POST"
+            },
+            "body": json.dumps({
+                "message": "Failed to save registration",
+                "error": str(e)
+            })
+        }
+```
+
+Now click Deploy.
+
+What this code does:
+
+* Reads the registration data from the event or HTTP request body.
+
+* Generates a unique `registrationId`.
+
+* Stores the name, email, phone number, and submission time.
+
+* Returns a success response if DynamoDB accepts the item.
+
+* Logs errors and returns an error response if something fails.
+
+The code assumes your form uses the field names `name`, `email`, and `phone`. If the supplied form uses different names, update those three keys to match the actual form. The function also expects JSON in the HTTP request body when called through an API.
+
+### Step 7: Test Lambda before connecting the form
+
+Do this test first. It confirms whether Lambda can write to DynamoDB independently of the registration form.
+
+* In Lambda, click Test.
+
+* Create a new test event named `RegistrationTest`.
+
+* Choose the JSON event editor and enter this sample event:
+
+```json
+
+{
+  "name": "Rahul Patil",
+  "email": "rahul@example.com",
+  "phone": "9876543210"
+}
+```
+
+* Save the test event.
+
+* Click Test again to invoke the function.
+
+Expected response:
+
+```json
+{
+  "statusCode": 200,
+  "body": "{\"message\": \"Registration saved successfully\", \"registrationId\": \"...\"}"
+}
+```
+
+The registration ID will be different each time.
+
+Verify the database
+
+Open DynamoDB → Tables → `Registrations` → Explore table items (or View items, depending on the console version). Click Scan or Run to display the records.
+
+You should see an item containing `registrationId`, `name`, `email`, `phone`, and `createdAt`.
+
+If the Lambda test fails, fix that before connecting the form. Otherwise, it will be difficult to tell whether the problem is in the code, permissions, or HTTP connection.
+
+### Step 8: Connect the supplied registration form
+
+Your practical says the registration form code will be provided. The form needs an endpoint to send its data to. Lambda alone does not automatically create a public HTTP URL. The usual solution is Amazon API Gateway.
+
+![Tutorial: Create a CRUD HTTP API with Lambda and DynamoDB - Amazon API Gateway](https://images.openai.com/static-rsc-4/qKDyoXSl4UJllTCbn26YjJFMVv993mTQ681Qzth9_H2A6fnf6nNeJpp3hIl0b7f6QIU_9S5Bw5YAXyZdmO4xzRhj8x8eQlw9p3pRCoPqPDXbAl0_zuqPC0QclEZH0-O203vNNx-Ui-D2JdZ5I244Tdz5Rc08Ae7PjkAPRdngYkHFPCQ9YwaCXmDFDh34EqMO?purpose=fullsize)
+
+* Search for API Gateway in AWS Console.
+
+* Click Create API.
+
+* Under HTTP API, click Build.
+
+* Add an integration and choose Lambda.
+
+* Select `RegistrationFunction` in the same Region.
+
+* Name the API `RegistrationAPI`.
+
+* Configure a route:
+
+    * Method: `POST`
+
+    * Path: `/register`
+
+* Ensure the route is connected to `RegistrationFunction`.
+
+* Enable CORS for your form's origin, allowing `POST` and `OPTIONS` methods and the `Content-Type` header. For a temporary classroom test, `*` can be used as the allowed origin if permitted.
+
+* Review and create/deploy the API.
+
+* Open the API's Stages section and copy its Invoke URL.
+
+Your endpoint will look like this:
+
+```text
+https://your-api-id.execute-api.ap-south-1.amazonaws.com/register
+```
+
+Use the actual URL provided by AWS, not the example above.
+
+### Update the supplied form
+
+If the form already contains JavaScript that submits the registration, update its API endpoint to the URL you copied. If it has only the HTML fields, the submission can be handled with JavaScript like this:
+
+```javascript
+
+const form = document.getElementById("registrationForm");
+
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+
+    const registration = {
+        name: formData.get("name"),
+        email: formData.get("email"),
+        phone: formData.get("phone")
+    };
+
+    try {
+        const response = await fetch(
+            "PASTE_YOUR_API_INVOKE_URL_HERE",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(registration)
+            }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.error || result.message);
+        }
+
+        alert("Registration saved successfully!");
+        form.reset();
+        console.log(result);
+
+    } catch (error) {
+        console.error(error);
+        alert("Registration failed: " + error.message);
+    }
+});
+```
+
+This example assumes the HTML form has `id="registrationForm"` and input elements named `name`, `email`, and `phone`. If your provided code uses different IDs or names, adapt the JavaScript rather than replacing the entire form.
+
+Important: A browser-based form must be served from a suitable local or hosted web page. Opening an HTML file directly may cause browser-origin restrictions, depending on the browser and API configuration.
+
+### Step 9: Perform the final demonstration
+
+Follow this order during your practical:
+
+* Open the registration form.
+
+* Enter a name, email, and phone number.
+
+* Click Submit/Register.
+
+* Confirm that the success message appears.
+
+* Open DynamoDB → `Registrations` → Explore table items.
+
+* Run a scan and show the newly stored registration.
+
+Each submission should generate a new `registrationId`, so multiple registrations can be stored independently.
+
+### Troubleshooting: common errors
+
+| Error                            | What to check                                                          |
+| -------------------------------- | ---------------------------------------------------------------------- |
+| AccessDeniedException            | Lambda execution role needs dynamodb:PutItem permission on the table.  |
+| ResourceNotFoundException        | Check TABLE_NAME, spelling, and AWS Region.                            |
+| KeyError: TABLE_NAME             | Add and save the Lambda environment variable.                          |
+| JSONDecodeError                  | The request body must contain valid JSON.                              |
+| HTTP 500                         | Open Lambda → Monitor → View CloudWatch logs for the exact error.      |
+| Browser CORS error               | Configure API Gateway CORS for the form's origin, method, and headers. |
+| Form submits but no item appears | Check the HTTP response, Lambda logs, and DynamoDB table.              |
+
+### What to say in the viva
+
+Q1. What is AWS Lambda?
+
+AWS Lambda is a serverless compute service that runs code in response to events without requiring us to manage servers.
+
+Q2. What is Amazon DynamoDB?
+
+Amazon DynamoDB is a fully managed NoSQL database service that stores data as items in tables.
+
+Q3. Why do we use API Gateway?
+
+API Gateway provides an HTTP endpoint through which a registration form can invoke a Lambda function.
+
+Q4. What is the purpose of the Lambda execution role?
+
+It gives the Lambda function permission to access AWS services, such as writing records to DynamoDB.
+
+Q5. What does `put_item()` do?
+
+`put_item()` writes an item to a DynamoDB table. If an item with the same primary key already exists, it can replace that item.
+
+Q6. Why is `registrationId` generated?
+
+It acts as the unique partition key for each registration and prevents unrelated submissions from overwriting one another.
+
+### Before your practical
+
+The most important unknown is the actual registration form code your teacher provides. The HTML field names and existing submission logic determine the exact changes needed.
+
+If you paste or upload that code here, I can adapt the Lambda function and connection steps to match it exactly, so you do not have to guess the field names or rewrite working parts of the supplied form.
+la
